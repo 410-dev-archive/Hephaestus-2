@@ -24,7 +24,7 @@ class ViewController: NSViewController {
     let MaxStep = 16.0
     var currentStep = 0.0
     let MaxStepInString = "16"
-    let version = "Release Candidate 4"
+    let version = "Release Candidate 5"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
