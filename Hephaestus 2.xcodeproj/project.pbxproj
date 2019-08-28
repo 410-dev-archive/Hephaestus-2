@@ -1,0 +1,605 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C32ED20A2316223800294A3A /* bootstraps in Resources */ = {isa = PBXBuildFile; fileRef = C32ED2092316223800294A3A /* bootstraps */; };
+		C36D3A212315923D001F0D67 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A202315923D001F0D67 /* Logo.png */; };
+		C36D3A25231594D8001F0D67 /* Button_Error.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A22231594D7001F0D67 /* Button_Error.png */; };
+		C36D3A26231594D8001F0D67 /* Button_Regular.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A23231594D7001F0D67 /* Button_Regular.png */; };
+		C36D3A27231594D8001F0D67 /* Button_Warning.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A24231594D8001F0D67 /* Button_Warning.png */; };
+		C3AF2C8623138B0000A3C7FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2C8523138B0000A3C7FD /* AppDelegate.swift */; };
+		C3AF2C8823138B0000A3C7FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2C8723138B0000A3C7FD /* ViewController.swift */; };
+		C3AF2C8A23138B0300A3C7FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3AF2C8923138B0300A3C7FD /* Assets.xcassets */; };
+		C3AF2C8D23138B0300A3C7FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3AF2C8B23138B0300A3C7FD /* Main.storyboard */; };
+		C3AF2C9923138B0300A3C7FD /* Hephaestus_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2C9823138B0300A3C7FD /* Hephaestus_2Tests.swift */; };
+		C3AF2CA423138B0300A3C7FD /* Hephaestus_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2CA323138B0300A3C7FD /* Hephaestus_2UITests.swift */; };
+		C3AF2CB223138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2CB123138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C3AF2C9523138B0300A3C7FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C3AF2C7A23138B0000A3C7FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C3AF2C8123138B0000A3C7FD;
+			remoteInfo = "Hephaestus 2";
+		};
+		C3AF2CA023138B0300A3C7FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C3AF2C7A23138B0000A3C7FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C3AF2C8123138B0000A3C7FD;
+			remoteInfo = "Hephaestus 2";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C32ED2092316223800294A3A /* bootstraps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bootstraps; sourceTree = "<group>"; };
+		C36D3A202315923D001F0D67 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		C36D3A22231594D7001F0D67 /* Button_Error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Error.png; sourceTree = "<group>"; };
+		C36D3A23231594D7001F0D67 /* Button_Regular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Regular.png; sourceTree = "<group>"; };
+		C36D3A24231594D8001F0D67 /* Button_Warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Warning.png; sourceTree = "<group>"; };
+		C3AF2C8223138B0000A3C7FD /* Hephaestus 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hephaestus 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3AF2C8523138B0000A3C7FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C3AF2C8723138B0000A3C7FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C3AF2C8923138B0300A3C7FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C3AF2C8C23138B0300A3C7FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C3AF2C8E23138B0300A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3AF2C8F23138B0300A3C7FD /* Hephaestus_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hephaestus_2.entitlements; sourceTree = "<group>"; };
+		C3AF2C9423138B0300A3C7FD /* Hephaestus 2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hephaestus 2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3AF2C9823138B0300A3C7FD /* Hephaestus_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hephaestus_2Tests.swift; sourceTree = "<group>"; };
+		C3AF2C9A23138B0300A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3AF2C9F23138B0300A3C7FD /* Hephaestus 2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hephaestus 2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3AF2CA323138B0300A3C7FD /* Hephaestus_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hephaestus_2UITests.swift; sourceTree = "<group>"; };
+		C3AF2CA523138B0300A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3AF2CB123138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLevelCompatibilityLayer.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C3AF2C7F23138B0000A3C7FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3AF2C9123138B0300A3C7FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3AF2C9C23138B0300A3C7FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C3AF2C7923138B0000A3C7FD = {
+			isa = PBXGroup;
+			children = (
+				C3AF2C8423138B0000A3C7FD /* Hephaestus 2 */,
+				C3AF2C9723138B0300A3C7FD /* Hephaestus 2Tests */,
+				C3AF2CA223138B0300A3C7FD /* Hephaestus 2UITests */,
+				C3AF2C8323138B0000A3C7FD /* Products */,
+				C36D3A202315923D001F0D67 /* Logo.png */,
+				C36D3A22231594D7001F0D67 /* Button_Error.png */,
+				C36D3A23231594D7001F0D67 /* Button_Regular.png */,
+				C36D3A24231594D8001F0D67 /* Button_Warning.png */,
+				C32ED2092316223800294A3A /* bootstraps */,
+			);
+			sourceTree = "<group>";
+		};
+		C3AF2C8323138B0000A3C7FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3AF2C8223138B0000A3C7FD /* Hephaestus 2.app */,
+				C3AF2C9423138B0300A3C7FD /* Hephaestus 2Tests.xctest */,
+				C3AF2C9F23138B0300A3C7FD /* Hephaestus 2UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3AF2C8423138B0000A3C7FD /* Hephaestus 2 */ = {
+			isa = PBXGroup;
+			children = (
+				C3AF2CB123138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift */,
+				C3AF2C8523138B0000A3C7FD /* AppDelegate.swift */,
+				C3AF2C8723138B0000A3C7FD /* ViewController.swift */,
+				C3AF2C8923138B0300A3C7FD /* Assets.xcassets */,
+				C3AF2C8B23138B0300A3C7FD /* Main.storyboard */,
+				C3AF2C8E23138B0300A3C7FD /* Info.plist */,
+				C3AF2C8F23138B0300A3C7FD /* Hephaestus_2.entitlements */,
+			);
+			path = "Hephaestus 2";
+			sourceTree = "<group>";
+		};
+		C3AF2C9723138B0300A3C7FD /* Hephaestus 2Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C3AF2C9823138B0300A3C7FD /* Hephaestus_2Tests.swift */,
+				C3AF2C9A23138B0300A3C7FD /* Info.plist */,
+			);
+			path = "Hephaestus 2Tests";
+			sourceTree = "<group>";
+		};
+		C3AF2CA223138B0300A3C7FD /* Hephaestus 2UITests */ = {
+			isa = PBXGroup;
+			children = (
+				C3AF2CA323138B0300A3C7FD /* Hephaestus_2UITests.swift */,
+				C3AF2CA523138B0300A3C7FD /* Info.plist */,
+			);
+			path = "Hephaestus 2UITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C3AF2C8123138B0000A3C7FD /* Hephaestus 2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3AF2CA823138B0300A3C7FD /* Build configuration list for PBXNativeTarget "Hephaestus 2" */;
+			buildPhases = (
+				C3AF2C7E23138B0000A3C7FD /* Sources */,
+				C3AF2C7F23138B0000A3C7FD /* Frameworks */,
+				C3AF2C8023138B0000A3C7FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Hephaestus 2";
+			productName = "Hephaestus 2";
+			productReference = C3AF2C8223138B0000A3C7FD /* Hephaestus 2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C3AF2C9323138B0300A3C7FD /* Hephaestus 2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3AF2CAB23138B0300A3C7FD /* Build configuration list for PBXNativeTarget "Hephaestus 2Tests" */;
+			buildPhases = (
+				C3AF2C9023138B0300A3C7FD /* Sources */,
+				C3AF2C9123138B0300A3C7FD /* Frameworks */,
+				C3AF2C9223138B0300A3C7FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3AF2C9623138B0300A3C7FD /* PBXTargetDependency */,
+			);
+			name = "Hephaestus 2Tests";
+			productName = "Hephaestus 2Tests";
+			productReference = C3AF2C9423138B0300A3C7FD /* Hephaestus 2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C3AF2C9E23138B0300A3C7FD /* Hephaestus 2UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3AF2CAE23138B0300A3C7FD /* Build configuration list for PBXNativeTarget "Hephaestus 2UITests" */;
+			buildPhases = (
+				C3AF2C9B23138B0300A3C7FD /* Sources */,
+				C3AF2C9C23138B0300A3C7FD /* Frameworks */,
+				C3AF2C9D23138B0300A3C7FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3AF2CA123138B0300A3C7FD /* PBXTargetDependency */,
+			);
+			name = "Hephaestus 2UITests";
+			productName = "Hephaestus 2UITests";
+			productReference = C3AF2C9F23138B0300A3C7FD /* Hephaestus 2UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C3AF2C7A23138B0000A3C7FD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1030;
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = "Hoyoun Song";
+				TargetAttributes = {
+					C3AF2C8123138B0000A3C7FD = {
+						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+					C3AF2C9323138B0300A3C7FD = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = C3AF2C8123138B0000A3C7FD;
+					};
+					C3AF2C9E23138B0300A3C7FD = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = C3AF2C8123138B0000A3C7FD;
+					};
+				};
+			};
+			buildConfigurationList = C3AF2C7D23138B0000A3C7FD /* Build configuration list for PBXProject "Hephaestus 2" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C3AF2C7923138B0000A3C7FD;
+			productRefGroup = C3AF2C8323138B0000A3C7FD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C3AF2C8123138B0000A3C7FD /* Hephaestus 2 */,
+				C3AF2C9323138B0300A3C7FD /* Hephaestus 2Tests */,
+				C3AF2C9E23138B0300A3C7FD /* Hephaestus 2UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C3AF2C8023138B0000A3C7FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C36D3A25231594D8001F0D67 /* Button_Error.png in Resources */,
+				C32ED20A2316223800294A3A /* bootstraps in Resources */,
+				C36D3A212315923D001F0D67 /* Logo.png in Resources */,
+				C3AF2C8A23138B0300A3C7FD /* Assets.xcassets in Resources */,
+				C36D3A26231594D8001F0D67 /* Button_Regular.png in Resources */,
+				C36D3A27231594D8001F0D67 /* Button_Warning.png in Resources */,
+				C3AF2C8D23138B0300A3C7FD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3AF2C9223138B0300A3C7FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3AF2C9D23138B0300A3C7FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C3AF2C7E23138B0000A3C7FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3AF2CB223138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift in Sources */,
+				C3AF2C8823138B0000A3C7FD /* ViewController.swift in Sources */,
+				C3AF2C8623138B0000A3C7FD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3AF2C9023138B0300A3C7FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3AF2C9923138B0300A3C7FD /* Hephaestus_2Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3AF2C9B23138B0300A3C7FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3AF2CA423138B0300A3C7FD /* Hephaestus_2UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C3AF2C9623138B0300A3C7FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C3AF2C8123138B0000A3C7FD /* Hephaestus 2 */;
+			targetProxy = C3AF2C9523138B0300A3C7FD /* PBXContainerItemProxy */;
+		};
+		C3AF2CA123138B0300A3C7FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C3AF2C8123138B0000A3C7FD /* Hephaestus 2 */;
+			targetProxy = C3AF2CA023138B0300A3C7FD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C3AF2C8B23138B0300A3C7FD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C3AF2C8C23138B0300A3C7FD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C3AF2CA623138B0300A3C7FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C3AF2CA723138B0300A3C7FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		C3AF2CA923138B0300A3C7FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Hephaestus 2/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C3AF2CAA23138B0300A3C7FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Hephaestus 2/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C3AF2CAC23138B0300A3C7FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Hephaestus 2Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hephaestus 2.app/Contents/MacOS/Hephaestus 2";
+			};
+			name = Debug;
+		};
+		C3AF2CAD23138B0300A3C7FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Hephaestus 2Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hephaestus 2.app/Contents/MacOS/Hephaestus 2";
+			};
+			name = Release;
+		};
+		C3AF2CAF23138B0300A3C7FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Hephaestus 2UITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Hephaestus 2";
+			};
+			name = Debug;
+		};
+		C3AF2CB023138B0300A3C7FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Hephaestus 2UITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Hephaestus 2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C3AF2C7D23138B0000A3C7FD /* Build configuration list for PBXProject "Hephaestus 2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3AF2CA623138B0300A3C7FD /* Debug */,
+				C3AF2CA723138B0300A3C7FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3AF2CA823138B0300A3C7FD /* Build configuration list for PBXNativeTarget "Hephaestus 2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3AF2CA923138B0300A3C7FD /* Debug */,
+				C3AF2CAA23138B0300A3C7FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3AF2CAB23138B0300A3C7FD /* Build configuration list for PBXNativeTarget "Hephaestus 2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3AF2CAC23138B0300A3C7FD /* Debug */,
+				C3AF2CAD23138B0300A3C7FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3AF2CAE23138B0300A3C7FD /* Build configuration list for PBXNativeTarget "Hephaestus 2UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3AF2CAF23138B0300A3C7FD /* Debug */,
+				C3AF2CB023138B0300A3C7FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C3AF2C7A23138B0000A3C7FD /* Project object */;
+}

@@ -1,0 +1,127 @@
+#!/bin/bash
+args=$1
+pkg=$2
+ROOTFS="/"
+LIBRARY=$ROOTFS"usr/local/mpkglib"
+SEDLIB="\\/usr\\/local\\/mpkglib\\/temp\\/Payload\\/"
+RED='\033[0;31m'
+GRN='\033[0;32m'
+NC='\033[0m'
+if [[ -z $args ]]; then
+	$LIBRARY/binary/mpkg-manual
+	exit
+fi
+echo "Running Macintosh Packager-live..."
+echo "Last Update: Aug 18, 2019 KST 18:39:53"
+echo "BASE: MPKG 1.2"
+echo "MPKG 4.3 SEMI-COMPATIBILITY LAYER INCLUDED"
+if [ "$EUID" -ne 0 ]; then 
+	echo "Not enough permission!"
+ 	exit
+fi
+if [[ ! -e $LIBRARY ]]; then
+	sudo mkdir $LIBRARY
+	sudo mkdir $LIBRARY/db
+	sudo mkdir $LIBRARY/temp
+fi
+if [[ -z $(echo $pkg|grep ".mpack") ]]; then
+	echo -e "${RED}E:36${NC}"
+	echo -e "${RED}It is not a mpkg package!${NC}"
+	exit
+else
+	echo "Locking mpkg..."
+	sudo touch $LIBRARY/lock
+	echo "Unpacking..."
+	if [ ! -e $LIBRARY/temp ]; then
+		sudo mkdir $LIBRARY/temp
+	else
+		sudo rm -r $LIBRARY/temp
+		sudo mkdir $LIBRARY/temp
+	fi
+	cp $pkg $LIBRARY/temp/
+	if [ ! -e $LIBRARY/temp/*.mpack ]; then
+		echo -e "${RED}E:31${NC}"
+		echo -e "${RED}Failed to unpack.${NC}"
+		sudo rm -r $LIBRARY/temp
+		sudo rm $LIBRARY/lock
+		exit
+	fi
+	mv $LIBRARY/temp/*.mpack $LIBRARY/temp/package.zip
+	unzip -qq $LIBRARY/temp/package.zip -d $LIBRARY/temp
+	if [ ! -e $LIBRARY/temp/Info.zip ]; then
+		echo -e "${RED}E:22${NC}"
+		echo -e "${RED}Package Corruption (No Control Cluster). Unable to continue.${NC}"
+		sudo rm -r $LIBRARY/temp
+		sudo rm $LIBRARY/lock
+		exit
+	fi
+	if [ ! -e $LIBRARY/temp/Payload.zip ]; then
+		echo -e "${RED}E:23${NC}"
+		echo -e "${RED}Package Corruption (No Payload). Unable to continue.${NC}"
+		sudo rm -r $LIBRARY/temp
+		sudo rm $LIBRARY/lock
+		exit
+	fi
+	mkdir $LIBRARY/temp/Info
+	unzip -qq $LIBRARY/temp/Info.zip -d $LIBRARY/temp/Info
+fi
+mkdir $LIBRARY/temp/Payload
+unzip -qq $LIBRARY/temp/Payload.zip -d $LIBRARY/temp/Payload
+if [[ ! -e $LIBRARY/temp/Info/pkgname ]]; then
+	echo -e "${RED}E:37${NC}"
+	echo -e "${RED}Package Corruption (No PN control). Unable to continue.${NC}"
+	sudo rm -r $LIBRARY/temp
+	sudo rm $LIBRARY/lock
+	exit
+elif [[ ! -e $LIBRARY/temp/Info/version ]]; then
+	echo -e "${RED}E:38${NC}"
+	echo -e "${RED}Package Corruption (No Version control). Unable to continue.${NC}"
+	sudo rm -r $LIBRARY/temp
+	sudo rm $LIBRARY/lock
+	exit
+elif [[ ! -e $LIBRARY/temp/Info/pkgid ]]; then
+	echo -e "${RED}E:38${NC}"
+	echo -e "${RED}Package Corruption (No PI control). Unable to continue.${NC}"
+	sudo rm -r $LIBRARY/temp
+	sudo rm $LIBRARY/lock
+	exit
+elif [[ ! -e $LIBRARY/temp/Payload ]]; then
+	echo -e "${RED}E:39${NC}"
+	echo -e "${RED}Package Corruption (No payload). Unable to continue.${NC}"
+	sudo rm -r $LIBRARY/temp
+	sudo rm $LIBRARY/lock
+	exit
+fi
+echo "Installing "$(<$LIBRARY/temp/Info/pkgname)"..."
+echo "Selecting "$(<$LIBRARY/temp/Info/pkgid) $(<$LIBRARY/temp/Info/version)" to install..."
+if [[ -e $LIBRARY/temp/Info/preinst.sh ]]; then
+	echo "Running preinst..."
+	sudo $LIBRARY/temp/Info/preinst.sh
+fi
+echo "Removing Finder Elements..."
+sudo find $LIBRARY/temp -name ".DS_Store" -exec rm {} \;
+echo "Installing..."
+sudo cp -r $LIBRARY/temp/Payload/* $ROOTFS
+if [[ -e $LIBRARY/temp/Info/postinst.sh ]]; then
+	echo "Running postinst..." 
+	sudo $LIBRARY/temp/Info/postinst.sh
+fi
+echo "Installing controls..."
+if [[ ! -e $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid) ]]; then
+	sudo mkdir $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid)
+fi
+sudo cp $LIBRARY/temp/Info/* $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid)/
+echo "Writing connected files to database..."
+sudo find $LIBRARY/temp/Payload -not -type d | grep $LIBRARY/temp/Payload > $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid)/files
+sudo sed -i '' s/$SEDLIB/\\// $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid)/files
+sudo sed -i '' s/Thumbs.db// $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid)/files
+sudo sed -i '' s/.DS_Store// $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid)/files
+sudo sed -i '' s/\\/usr\\/local\\/mpkglib\\/temp\\/Payload// $LIBRARY/db/$(<$LIBRARY/temp/Info/pkgid)/files
+echo "Analysis written to database."
+echo "Finished installing:" $(<$LIBRARY/temp/Info/pkgname) $(<$LIBRARY/temp/Info/version)
+echo "Cleaning up..."
+sudo rm -r $LIBRARY/temp
+sudo rm $LIBRARY/lock
+echo -e "${GRN}Done.${NC}"
+exit
+
