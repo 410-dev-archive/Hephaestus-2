@@ -1,49 +1,29 @@
 #!/bin/bash
 BINARY=/usr/local/Libertas/Library/distribution/Hephaestus/application/Hephaestus.app/Contents/MacOS/Hephaestus
 sudo mkdir /usr/local/temp-init
-if [[ $3 == "local" ]]; then
-    if [[ ! -e /usr/local/mpkglib ]] && [[ $1 == "mpkg" ]]; then
-        echo "[INSTALLER] Installing MPKG..."
-        sleep 1
-        sudo "$2"/bootstraps/mpkglive -i "$2"/bootstraps/mpkg.mpack
-    elif [[ $1 == "libusersupport" ]]; then
-        echo "[INSTALLER] Installing libusersupport..."
-        sleep 1
-        sudo /usr/local/bin/mpkg -i "$2"/bootstraps/libusersupport.mpack
-    elif [[ ! -e /usr/local/mpkglib/db/jailbreakd-libertas ]] && [[ $1 == "libertas-10.14" ]]; then
-        echo "[INSTALLER] Installing latest Libertas API for 10.14..."
-        sleep 1
-        sudo /usr/local/bin/mpkg -i "$2"/bootstraps/libertas-10.14.mpack
-    elif [[ ! -e /usr/local/mpkglib/db/jailbreakd-libertas-10.15.x ]] && [[ $1 == "libertas-10.15" ]]; then
-        echo "[INSTALLER] Installing latest Libertas API for 10.15..."
-        sleep 1
-        sudo /usr/local/bin/mpkg -i "$2"/bootstraps/libertas-10.15.mpack
-    fi
-else
-    if [[ ! -e /usr/local/mpkglib ]] && [[ $1 == "mpkg" ]]; then
-        echo "[INSTALLER] Installing MPKG..."
-        sleep 1
-        sudo curl -Ls https://raw.githubusercontent.com/HTTP410GONE/MacintoshPackager/master/net-live -o /usr/local/temp-init/script.sh --progress-bar
-        sudo chmod +x /usr/local/temp-init/script.sh
-        sudo /usr/local/temp-init/script.sh
-    elif [[ ! -e /usr/local/mpkglib/db/libusersupport ]] && [[ $1 == "libusersupport" ]]; then
-        echo "[INSTALLER] Installing libusersupport..."
-        sleep 1
-        sudo curl -Ls https://github.com/HTTP410GONE/Macintosh-Packages/raw/master/libusersupport_1.0_darwin64-signed.mpack -o /usr/local/temp-init/libusersupport.mpack --progress-bar
-        sudo /usr/local/bin/mpkg -i /usr/local/temp-init/libusersupport.mpack --override
-    elif [[ ! -e /usr/local/mpkglib/db/jailbreakd-libertas ]] && [[ $1 == "libertas-10.14" ]]; then
-        echo "[INSTALLER] Installing latest Libertas API for 10.14..."
-        sleep 1
-        sudo curl -Ls https://github.com/HTTP410GONE/Libertas/raw/master/Releases/jailbreakd-libertas_10.14-Spectrum2_darwin64.mpack -o /usr/local/temp-init/libertas.mpack --progress-bar
-        sudo /usr/local/bin/mpkg -i /usr/local/temp-init/libertas.mpack --override
-    elif [[ ! -e /usr/local/mpkglib/db/jailbreakd-libertas-10.15.x ]] && [[ $1 == "libertas-10.15" ]]; then
-        echo "[INSTALLER] Installing latest Libertas API for 10.15..."
-        sleep 1
-        LATEST=$(curl -Ls "https://raw.githubusercontent.com/HTTP410GONE/Libertas/master/Releases/latest")
-        ADDRESS="https://github.com/HTTP410GONE/Libertas/raw/master/Releases/"$LATEST
-        sudo curl -Ls $ADDRESS -o /usr/local/temp-init/libertas.mpack --progress-bar
-        sudo /usr/local/bin/mpkg -i /usr/local/temp-init/libertas.mpack --override
-    fi
+if [[ ! -e /usr/local/mpkglib ]] && [[ $1 == "mpkg" ]]; then
+    echo "[INSTALLER] Installing MPKG..."
+    sleep 1
+    sudo curl -Ls https://raw.githubusercontent.com/HTTP410GONE/MacintoshPackager/master/net-live -o /usr/local/temp-init/script.sh --progress-bar
+    sudo chmod +x /usr/local/temp-init/script.sh
+    sudo /usr/local/temp-init/script.sh
+elif [[ ! -e /usr/local/mpkglib/db/libusersupport ]] && [[ $1 == "libusersupport" ]]; then
+    echo "[INSTALLER] Installing libusersupport..."
+    sleep 1
+    sudo curl -Ls https://github.com/HTTP410GONE/Macintosh-Packages/raw/master/libusersupport_1.0_darwin64-signed.mpack -o /usr/local/temp-init/libusersupport.mpack --progress-bar
+    sudo /usr/local/bin/mpkg -i /usr/local/temp-init/libusersupport.mpack --override
+elif [[ ! -e /usr/local/mpkglib/db/jailbreakd-libertas ]] && [[ $1 == "libertas-10.14" ]]; then
+    echo "[INSTALLER] Installing latest Libertas API for 10.14..."
+    sleep 1
+    sudo curl -Ls https://github.com/HTTP410GONE/Libertas/raw/master/Releases/jailbreakd-libertas_10.14-Spectrum2_darwin64.mpack -o /usr/local/temp-init/libertas.mpack --progress-bar
+    sudo /usr/local/bin/mpkg -i /usr/local/temp-init/libertas.mpack --override
+elif [[ ! -e /usr/local/mpkglib/db/jailbreakd-libertas-10.15.x ]] && [[ $1 == "libertas-10.15" ]]; then
+    echo "[INSTALLER] Installing latest Libertas API for 10.15..."
+    sleep 1
+    LATEST=$(curl -Ls "https://raw.githubusercontent.com/HTTP410GONE/Libertas/master/Releases/latest")
+    ADDRESS="https://github.com/HTTP410GONE/Libertas/raw/master/Releases/"$LATEST
+    sudo curl -Ls $ADDRESS -o /usr/local/temp-init/libertas.mpack --progress-bar
+    sudo /usr/local/bin/mpkg -i /usr/local/temp-init/libertas.mpack --override
 fi
 sudo rm -r /usr/local/temp-init
 if [[ ! -e /usr/local/Libertas/Library/COM ]]; then
