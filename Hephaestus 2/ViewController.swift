@@ -109,6 +109,11 @@ class ViewController: NSViewController {
         }
         TargetTask.isEnabled = false
         Spinner.startAnimation("")
+        if System.checkFile(pathway: "/usr/local/mpkglib/db/libhephaestus-libertas") {
+            println("Incompatible Hephaestus Library installed.")
+            Graphics.msgBox_errorMessage(title: "Deprecated Hephaestus Installed", contents: "Hephaestus 1 seems installed. It is not compatible with Hephaestus 2, and may screw up the whole system. Please restore LanSchool using Hephaestus 1, then fully remove Hephaestus 1 with its launcher. Then launch this app. The app will now exit.")
+            exit(-9)
+        }
         if targetTaskIsJailbreak {
             actionJailbreak()
         }else{
