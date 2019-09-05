@@ -1,0 +1,11 @@
+if [[ $1 == "unhide" ]]; then
+	sudo dscl . create /Users/$2 IsHidden 0
+elif [[ $1 == "rollback" ]]; then
+	sudo mv /usr/local/$2 /Users/$2
+elif [[ $1 == "del" ]]; then
+	sudo rm -r /Users/$2
+	sudo dscl . delete /Users/$2
+else
+	echo "No such verb."
+	exit
+fi

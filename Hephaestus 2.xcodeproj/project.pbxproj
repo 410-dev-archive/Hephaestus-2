@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C3168FAC231EBB15000370AA /* CoreLevelCompatibilityLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3168FAB231EBB15000370AA /* CoreLevelCompatibilityLayer.swift */; };
+		C3168FAE231EBB38000370AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3168FAD231EBB38000370AA /* AppDelegate.swift */; };
+		C3168FB0231EBB4D000370AA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3168FAF231EBB4D000370AA /* Info.plist */; };
+		C3168FB4231EBB6A000370AA /* Button_Error.png in Resources */ = {isa = PBXBuildFile; fileRef = C3168FB1231EBB6A000370AA /* Button_Error.png */; };
+		C3168FB5231EBB6A000370AA /* Button_Regular.png in Resources */ = {isa = PBXBuildFile; fileRef = C3168FB2231EBB6A000370AA /* Button_Regular.png */; };
+		C3168FB6231EBB6A000370AA /* Button_Warning.png in Resources */ = {isa = PBXBuildFile; fileRef = C3168FB3231EBB6A000370AA /* Button_Warning.png */; };
+		C3168FB8231EBBC7000370AA /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C3168FB7231EBBC7000370AA /* Logo.png */; };
 		C32ED20A2316223800294A3A /* bootstraps in Resources */ = {isa = PBXBuildFile; fileRef = C32ED2092316223800294A3A /* bootstraps */; };
-		C36D3A212315923D001F0D67 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A202315923D001F0D67 /* Logo.png */; };
-		C36D3A25231594D8001F0D67 /* Button_Error.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A22231594D7001F0D67 /* Button_Error.png */; };
-		C36D3A26231594D8001F0D67 /* Button_Regular.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A23231594D7001F0D67 /* Button_Regular.png */; };
-		C36D3A27231594D8001F0D67 /* Button_Warning.png in Resources */ = {isa = PBXBuildFile; fileRef = C36D3A24231594D8001F0D67 /* Button_Warning.png */; };
-		C3AF2C8623138B0000A3C7FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2C8523138B0000A3C7FD /* AppDelegate.swift */; };
 		C3AF2C8823138B0000A3C7FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2C8723138B0000A3C7FD /* ViewController.swift */; };
 		C3AF2C8A23138B0300A3C7FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3AF2C8923138B0300A3C7FD /* Assets.xcassets */; };
 		C3AF2C8D23138B0300A3C7FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3AF2C8B23138B0300A3C7FD /* Main.storyboard */; };
 		C3AF2C9923138B0300A3C7FD /* Hephaestus_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2C9823138B0300A3C7FD /* Hephaestus_2Tests.swift */; };
 		C3AF2CA423138B0300A3C7FD /* Hephaestus_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2CA323138B0300A3C7FD /* Hephaestus_2UITests.swift */; };
-		C3AF2CB223138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2CB123138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,17 +40,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C3168FAB231EBB15000370AA /* CoreLevelCompatibilityLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLevelCompatibilityLayer.swift; sourceTree = "<group>"; };
+		C3168FAD231EBB38000370AA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C3168FAF231EBB4D000370AA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3168FB1231EBB6A000370AA /* Button_Error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Error.png; sourceTree = "<group>"; };
+		C3168FB2231EBB6A000370AA /* Button_Regular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Regular.png; sourceTree = "<group>"; };
+		C3168FB3231EBB6A000370AA /* Button_Warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Warning.png; sourceTree = "<group>"; };
+		C3168FB7231EBBC7000370AA /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		C32ED2092316223800294A3A /* bootstraps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bootstraps; sourceTree = "<group>"; };
-		C36D3A202315923D001F0D67 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
-		C36D3A22231594D7001F0D67 /* Button_Error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Error.png; sourceTree = "<group>"; };
-		C36D3A23231594D7001F0D67 /* Button_Regular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Regular.png; sourceTree = "<group>"; };
-		C36D3A24231594D8001F0D67 /* Button_Warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Warning.png; sourceTree = "<group>"; };
 		C3AF2C8223138B0000A3C7FD /* Hephaestus 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hephaestus 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C3AF2C8523138B0000A3C7FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3AF2C8723138B0000A3C7FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C3AF2C8923138B0300A3C7FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C3AF2C8C23138B0300A3C7FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C3AF2C8E23138B0300A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3AF2C8F23138B0300A3C7FD /* Hephaestus_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hephaestus_2.entitlements; sourceTree = "<group>"; };
 		C3AF2C9423138B0300A3C7FD /* Hephaestus 2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hephaestus 2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3AF2C9823138B0300A3C7FD /* Hephaestus_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hephaestus_2Tests.swift; sourceTree = "<group>"; };
@@ -57,7 +59,6 @@
 		C3AF2C9F23138B0300A3C7FD /* Hephaestus 2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hephaestus 2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3AF2CA323138B0300A3C7FD /* Hephaestus_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hephaestus_2UITests.swift; sourceTree = "<group>"; };
 		C3AF2CA523138B0300A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C3AF2CB123138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLevelCompatibilityLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,10 +93,10 @@
 				C3AF2C9723138B0300A3C7FD /* Hephaestus 2Tests */,
 				C3AF2CA223138B0300A3C7FD /* Hephaestus 2UITests */,
 				C3AF2C8323138B0000A3C7FD /* Products */,
-				C36D3A202315923D001F0D67 /* Logo.png */,
-				C36D3A22231594D7001F0D67 /* Button_Error.png */,
-				C36D3A23231594D7001F0D67 /* Button_Regular.png */,
-				C36D3A24231594D8001F0D67 /* Button_Warning.png */,
+				C3168FB1231EBB6A000370AA /* Button_Error.png */,
+				C3168FB2231EBB6A000370AA /* Button_Regular.png */,
+				C3168FB3231EBB6A000370AA /* Button_Warning.png */,
+				C3168FB7231EBBC7000370AA /* Logo.png */,
 				C32ED2092316223800294A3A /* bootstraps */,
 			);
 			sourceTree = "<group>";
@@ -113,12 +114,12 @@
 		C3AF2C8423138B0000A3C7FD /* Hephaestus 2 */ = {
 			isa = PBXGroup;
 			children = (
-				C3AF2CB123138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift */,
-				C3AF2C8523138B0000A3C7FD /* AppDelegate.swift */,
+				C3168FAB231EBB15000370AA /* CoreLevelCompatibilityLayer.swift */,
+				C3168FAD231EBB38000370AA /* AppDelegate.swift */,
 				C3AF2C8723138B0000A3C7FD /* ViewController.swift */,
 				C3AF2C8923138B0300A3C7FD /* Assets.xcassets */,
 				C3AF2C8B23138B0300A3C7FD /* Main.storyboard */,
-				C3AF2C8E23138B0300A3C7FD /* Info.plist */,
+				C3168FAF231EBB4D000370AA /* Info.plist */,
 				C3AF2C8F23138B0300A3C7FD /* Hephaestus_2.entitlements */,
 			);
 			path = "Hephaestus 2";
@@ -251,13 +252,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C36D3A25231594D8001F0D67 /* Button_Error.png in Resources */,
+				C3168FB0231EBB4D000370AA /* Info.plist in Resources */,
+				C3168FB4231EBB6A000370AA /* Button_Error.png in Resources */,
 				C32ED20A2316223800294A3A /* bootstraps in Resources */,
-				C36D3A212315923D001F0D67 /* Logo.png in Resources */,
 				C3AF2C8A23138B0300A3C7FD /* Assets.xcassets in Resources */,
-				C36D3A26231594D8001F0D67 /* Button_Regular.png in Resources */,
-				C36D3A27231594D8001F0D67 /* Button_Warning.png in Resources */,
+				C3168FB8231EBBC7000370AA /* Logo.png in Resources */,
+				C3168FB5231EBB6A000370AA /* Button_Regular.png in Resources */,
 				C3AF2C8D23138B0300A3C7FD /* Main.storyboard in Resources */,
+				C3168FB6231EBB6A000370AA /* Button_Warning.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,9 +284,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3AF2CB223138BAA00A3C7FD /* CoreLevelCompatibilityLayer.swift in Sources */,
+				C3168FAE231EBB38000370AA /* AppDelegate.swift in Sources */,
+				C3168FAC231EBB15000370AA /* CoreLevelCompatibilityLayer.swift in Sources */,
 				C3AF2C8823138B0000A3C7FD /* ViewController.swift in Sources */,
-				C3AF2C8623138B0000A3C7FD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,26 @@
+tempd="/usr/local/verstect_temp"
+if [[ $1 == "gentemp" ]]; then
+	sudo mkdir $tempd
+elif [[ $1 == "clone" ]]; then
+	sudo mkdir $tempd/$2
+	sudo cp -r /usr/local/$2/Desktop $tempd/$2
+	sudo cp -r /usr/local/$2/Documents $tempd/$2
+	sudo cp -r /usr/local/$2/Downloads $tempd/$2
+	sudo cp -r /usr/local/$2/Music $tempd/$2
+	sudo cp -r /usr/local/$2/Movies $tempd/$2
+	sudo cp -r /usr/local/$2/Pictures $tempd/$2
+	sudo cp -r /usr/local/$2/Public $tempd/$2
+elif [[ $1 == "ownership" ]]; then
+	sudo chown -R $2 $tempd/
+elif [[ $1 == "compress" ]]; then
+	cd $tempd
+	sudo zip -r BackupVault.zip $2
+	mv BackupVault.zip $tempd/BackupVault.zip
+elif [[ $1 == "transfer" ]]; then
+	sudo mv $tempd/BackupVault.zip $(</usr/local/mpkglib/usersupport/localuser)/Downloads/BackupVault.zip
+elif [[ $1 == "cleanup" ]]; then
+	sudo rm -r $tempd
+else
+	echo "No such verb."
+	exit
+fi

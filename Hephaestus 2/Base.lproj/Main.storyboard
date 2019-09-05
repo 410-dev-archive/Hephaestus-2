@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14865.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -86,16 +87,16 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Hephaestus_2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="533"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="613"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nKF-V5-3DM">
-                                <rect key="frame" x="146" y="326" width="188" height="187"/>
+                                <rect key="frame" x="146" y="406" width="188" height="187"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Logo" id="NYB-Wq-fsQ"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sWz-8q-szs">
-                                <rect key="frame" x="123" y="275" width="234" height="35"/>
+                                <rect key="frame" x="123" y="363" width="234" height="35"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Hephaestus 2" id="nWn-4h-GT1">
                                     <font key="font" size="33" name="AppleBraille"/>
@@ -104,7 +105,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zmK-R9-RRA">
-                                <rect key="frame" x="66" y="207" width="70" height="22"/>
+                                <rect key="frame" x="61" y="305" width="70" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="0/15" id="BqY-ll-lBS">
                                     <font key="font" size="21" name="AppleBraille"/>
@@ -113,7 +114,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hoD-CP-PqG">
-                                <rect key="frame" x="161" y="255" width="158" height="23"/>
+                                <rect key="frame" x="160" y="332" width="158" height="23"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="10.14.x ~ 10.15.x" id="a2q-cT-wVU">
                                     <font key="font" size="15" name="Menlo-Regular"/>
@@ -121,21 +122,12 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SbV-N0-U2n">
-                                <rect key="frame" x="187" y="6" width="107" height="14"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Alpha Dev" id="qBY-Ej-MZq">
-                                    <font key="font" size="10" name="Menlo-Regular"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="6D9-Dh-nyz">
-                                <rect key="frame" x="68" y="190" width="345" height="20"/>
+                                <rect key="frame" x="68" y="285" width="345" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRj-Zp-8zP">
-                                <rect key="frame" x="162" y="35" width="157" height="56"/>
+                                <rect key="frame" x="162" y="28" width="157" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="squareTextured" title="Execute" bezelStyle="texturedSquare" image="Button_Regular" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="rQR-qV-7Az">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -147,7 +139,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgE-n1-m7E">
-                                <rect key="frame" x="135" y="199" width="336" height="27"/>
+                                <rect key="frame" x="135" y="297" width="336" height="27"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Ready" id="zdG-mV-w0y">
                                     <font key="font" size="16" name="AppleBraille"/>
@@ -156,11 +148,26 @@
                                 </textFieldCell>
                             </textField>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="lH7-nS-9zC">
-                                <rect key="frame" x="44" y="192" width="16" height="16"/>
+                                <rect key="frame" x="44" y="287" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
+                            <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fZX-l2-yMf">
+                                <rect key="frame" x="139" y="240" width="205" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="M0c-iI-F1G">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment label="Liberate" selected="YES"/>
+                                        <segment label="Restore" width="67" tag="1"/>
+                                        <segment label="Extra"/>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="SelectOption:" target="XfG-lQ-9wD" id="ZvR-BR-UDc"/>
+                                </connections>
+                            </segmentedControl>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U7m-Gv-lVJ">
-                                <rect key="frame" x="400" y="-1" width="66" height="32"/>
+                                <rect key="frame" x="400" y="13" width="66" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Quit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZqY-HT-fEq">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -170,24 +177,63 @@
                                     <action selector="Action_Quit:" target="XfG-lQ-9wD" id="y1V-Zb-40w"/>
                                 </connections>
                             </button>
-                            <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fZX-l2-yMf">
-                                <rect key="frame" x="153" y="123" width="168" height="24"/>
+                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3pm-42-Jlk">
+                                <rect key="frame" x="111" y="182" width="262" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="M0c-iI-F1G">
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Choose Command" drawsBackground="YES" completes="NO" numberOfVisibleItems="3" id="ANi-iL-Y0N">
                                     <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment label="Unleaseh" width="81" selected="YES"/>
-                                        <segment label="Restore" width="80" tag="1"/>
-                                    </segments>
-                                </segmentedCell>
-                            </segmentedControl>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <objectValues>
+                                        <string>Create Hidden User</string>
+                                        <string>Delete Hidden User</string>
+                                        <string>Backup Hidden User</string>
+                                    </objectValues>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="SelectedExtraAction:" target="XfG-lQ-9wD" id="sDI-D7-ls9"/>
+                                </connections>
+                            </comboBox>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PVA-pi-l2V">
+                                <rect key="frame" x="50" y="139" width="380" height="21"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Arguments" drawsBackground="YES" id="iau-Eo-unz">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YyQ-ly-bqt">
+                                <rect key="frame" x="50" y="108" width="380" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Secure Text Field" drawsBackground="YES" usesSingleLineMode="YES" id="5YY-uB-ZuJ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <allowedInputSourceLocales>
+                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                    </allowedInputSourceLocales>
+                                </secureTextFieldCell>
+                            </secureTextField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SbV-N0-U2n">
+                                <rect key="frame" x="91" y="6" width="296" height="14"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Alpha Dev" id="qBY-Ej-MZq">
+                                    <font key="font" size="10" name="Menlo-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="Arguments" destination="PVA-pi-l2V" id="UKA-Wb-1As"/>
+                        <outlet property="ETCCommands" destination="3pm-42-Jlk" id="qRI-3s-pXl"/>
                         <outlet property="Outlet_Button" destination="QRj-Zp-8zP" id="zon-bM-OR1"/>
                         <outlet property="Outlet_Quit" destination="U7m-Gv-lVJ" id="AOv-Pj-IZC"/>
                         <outlet property="Progress" destination="zmK-R9-RRA" id="ads-ml-wOu"/>
                         <outlet property="ProgressBar" destination="6D9-Dh-nyz" id="d0y-LT-FuJ"/>
+                        <outlet property="SecureTextField" destination="YyQ-ly-bqt" id="WqL-6F-XNK"/>
                         <outlet property="Spinner" destination="lH7-nS-9zC" id="sWQ-ad-1UG"/>
                         <outlet property="Status" destination="jgE-n1-m7E" id="GEw-lJ-CgR"/>
                         <outlet property="TargetTask" destination="fZX-l2-yMf" id="Wpf-hX-jHJ"/>
@@ -196,7 +242,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="786.5"/>
+            <point key="canvasLocation" x="75" y="826.5"/>
         </scene>
     </scenes>
     <resources>

@@ -1,0 +1,24 @@
+if [[ $1 == "createdefault" ]]; then
+	sudo dscl . -create /Users/$2
+elif [[ $1 == "setsh" ]]; then
+	sudo dscl . -create /Users/$2 UserShell $3
+elif [[ $1 == "setname" ]]; then
+	sudo dscl . -create /Users/$2 RealName $2
+elif [[ $1 == "setuid" ]]; then
+	sudo dscl . -create /Users/$2 UniqueID $3
+elif [[ $1 == "setprimarygroupid" ]]; then
+	sudo dscl . -create /Users/$2 PrimaryGroupID 1000
+elif [[ $1 == "initnfshome" ]]; then
+	sudo dscl . -create /Users/$2 NFSHomeDirectory /usr/local/$2
+elif [[ $1 == "setpw" ]]; then
+	sudo dscl . -passwd /Users/$2 $3
+elif [[ $1 == "grantmembership" ]]; then
+	sudo dscl . -append /Groups/admin GroupMembership $2
+elif [[ $1 == "setnfshome" ]]; then
+	sudo dscl . create /Users/$2 NFSHomeDirectory /usr/local/$2
+elif [[ $1 == "hide" ]]; then
+	sudo dscl . create /Users/$2 IsHidden 1
+else
+	echo "No such verb."
+	exit
+fi
