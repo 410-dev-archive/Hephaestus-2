@@ -1,0 +1,1 @@
+curl -L --progress-bar $2/macOS_$3.zip -o $1/image.zip

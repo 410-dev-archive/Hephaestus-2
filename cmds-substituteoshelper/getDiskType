@@ -1,0 +1,7 @@
+isDiskTypeAPFS=$(diskutil list | grep disk0s2 | grep Apple_APFS)
+if [[ -z $isDiskTypeAPFS ]]; then
+	touch $1/isNotAPFS
+else
+	touch $1/isAPFS
+fi
+exit

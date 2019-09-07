@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let MaxStep = 19.0
     var currentStep = 0.0
     let MaxStepInString = "19"
-    let version = "2.0 Public Release"
+    let version = "4.0 Internal Test Release"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
@@ -137,7 +137,15 @@ class ViewController: NSViewController {
             if ETCCommands.stringValue.elementsEqual("Create Hidden User") {
                 Graphics.msgBox_Message(title: "Warning for Creating a Hidden User", contents: "Please notice that the username should NOT include space, and will be used for login.")
                 SecureTextField.isHidden = false
+                Arguments.placeholderString = "Username"
+                SecureTextField.placeholderString = "Password"
+            }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
+                Graphics.msgBox_Message(title: "Installing Substitute OS", contents: "Please enter the version you want to install.\nPlease notice: Check wheter your Mac supports the OS.\nPlease notice: If your primary boot drive is NOT APFS, substitute installation will not work.\nAvailable versions: 10.14 / 10.15")
+                SecureTextField.isHidden = true
+                Arguments.placeholderString = "OS Version (10.14 / 10.15)"
             }else{
+                Arguments.placeholderString = "Arguments"
+                SecureTextField.placeholderString = "Secure Text Field"
                 SecureTextField.isHidden = true
             }
         }
@@ -289,9 +297,70 @@ class ViewController: NSViewController {
                 noShowRanTask = true
                 Graphics.msgBox_errorMessage(title: "Error", contents: "No such debug command.")
             }
+        }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
+            if Arguments.stringValue.elementsEqual("10.14") {
+                println("Will install: 10.14")
+                installSubstituteOS(targetVersion: "10.14")
+            }else if Arguments.stringValue.elementsEqual("10.15") {
+                println("Will install: 10.14")
+                installSubstituteOS(targetVersion: "10.15")
+            }else{
+                updateStatus("Ready")
+                currentStep = 0.0
+                println("Unrecognized version identifier: " + Arguments.stringValue)
+                Graphics.msgBox_errorMessage(title: "Version String Unrecognized", contents: "Version " + Arguments.stringValue + " is not recognizable version. Please type in either two: 10.14 or 10.15\nCodenames:\n10.14: Mojave\n10.15: Catalina")
+            }
+        }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
+            
+        }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
+            
         }else{
             noShowRanTask = true
             Graphics.msgBox_errorMessage(title: "Error", contents: "No valid option available.")
+        }
+    }
+    
+    func installSubstituteOS (targetVersion: String) {
+        updateStatus("Set BIN")
+        let bin = bundlePath + "/cmds-substituteoshelper/"
+        updateStatus("Create Caching Drive")
+        var cachingDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser")
+        cachingDir = cachingDir + "/hephaestustmp"
+        println("Caching drive: " + cachingDir)
+        System.sh("mkdir", cachingDir)
+        println("Setting helpers with chmod +x")
+        System.sh("chmod", "+x", bin + "getDiskType")
+        System.sh("chmod", "+x", bin + "getDiskSpace")
+        updateStatus("Getting Bootdrive Type")
+        System.sh(bin + "getDiskType", cachingDir)
+        if !System.checkFile(pathway: cachingDir + "/isAPFS") {
+            println("BOOT DRIVE IS NOT APFS!")
+            Graphics.msgBox_errorMessage(title: "Non-APFS Bootdrive", contents: "It seems your root drive is not an APFS Volume (Failed verification). Please convert it first, then resume.")
+        }else{
+            println("Checking available disk space")
+            updateStatus("Check disk space")
+            System.sh(bin + "getDiskSpace", cachingDir)
+            let rawData = System.readFile(pathway: cachingDir + "/availableDiskSpace")
+            let availableVolume = Double(rawData.components(separatedBy: "Gi")[2])
+            if availableVolume! <= 32 {
+                println("Not enough disk space!")
+                Graphics.msgBox_errorMessage(title: "Insufficient Disk Space", contents: "Your boot drive MUST have an empty space that is larger than 32GB. Please clear up your Time Machine Snapshots if you have any.")
+            }else{
+                updateStatus("Request for factory image")
+                let imageHostServer = System.readFile(pathway: bundlePath + "/dynamicpreferences/hostserver")
+                println("Check HOST online...")
+                System.sh(bin + "downloadfactoryimageindex", cachingDir, imageHostServer)
+                println("Verifying index...")
+                if System.readFile(pathway: cachingDir + "/indexdata").contains(Arguments.stringValue) {
+                    println("Found available version from server index.")
+                    println("Downloading image...")
+                    System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer, Arguments.stringValue)
+                }else if System.readFile(pathway: cachingDir + "/indexdata").contains("Operation time out") {
+                    Graphics.msgBox_errorMessage(title: "Server interaction failure", contents: "Unable to reach to server: " + imageHostServer + ". Please check your computer is online, or server is online.")
+                }else{
+                    
+                }
+            }
         }
     }
     
