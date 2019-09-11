@@ -1,0 +1,1 @@
+echo $(md5 $2) > $1/md5hash

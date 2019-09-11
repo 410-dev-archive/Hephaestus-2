@@ -310,7 +310,7 @@ class ViewController: NSViewController {
                 println("Unrecognized version identifier: " + Arguments.stringValue)
                 Graphics.msgBox_errorMessage(title: "Version String Unrecognized", contents: "Version " + Arguments.stringValue + " is not recognizable version. Please type in either two: 10.14 or 10.15\nCodenames:\n10.14: Mojave\n10.15: Catalina")
             }
-        }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
+        }else if ETCCommands.stringValue.elementsEqual("Reinstall OS") {
             
         }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
             
@@ -320,19 +320,22 @@ class ViewController: NSViewController {
         }
     }
     
-    func installSubstituteOS (targetVersion: String) {
+    func installOS(targetVersion: String) {
         updateStatus("Set BIN")
         let bin = bundlePath + "/cmds-substituteoshelper/"
         updateStatus("Create Caching Drive")
         var cachingDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser")
+        cachingDir = cachingDir.replacingOccurrences(of: "\n", with: "")
         cachingDir = cachingDir + "/hephaestustmp"
         println("Caching drive: " + cachingDir)
         System.sh("mkdir", cachingDir)
+        ranTasks = ranTasks + "\nCreated Caching Drive"
         println("Setting helpers with chmod +x")
         System.sh("chmod", "+x", bin + "getDiskType")
         System.sh("chmod", "+x", bin + "getDiskSpace")
         updateStatus("Getting Bootdrive Type")
         System.sh(bin + "getDiskType", cachingDir)
+        ranTasks = ranTasks + "\nVerified Disk type"
         if !System.checkFile(pathway: cachingDir + "/isAPFS") {
             println("BOOT DRIVE IS NOT APFS!")
             Graphics.msgBox_errorMessage(title: "Non-APFS Bootdrive", contents: "It seems your root drive is not an APFS Volume (Failed verification). Please convert it first, then resume.")
@@ -341,27 +344,62 @@ class ViewController: NSViewController {
             updateStatus("Check disk space")
             System.sh(bin + "getDiskSpace", cachingDir)
             let rawData = System.readFile(pathway: cachingDir + "/availableDiskSpace")
-            let availableVolume = Double(rawData.components(separatedBy: "Gi")[2])
+            let availableVolume = Double(rawData.replacingOccurrences(of: " ", with: "").components(separatedBy: "Gi")[2])
             if availableVolume! <= 32 {
                 println("Not enough disk space!")
                 Graphics.msgBox_errorMessage(title: "Insufficient Disk Space", contents: "Your boot drive MUST have an empty space that is larger than 32GB. Please clear up your Time Machine Snapshots if you have any.")
             }else{
                 updateStatus("Request for factory image")
-                let imageHostServer = System.readFile(pathway: bundlePath + "/dynamicpreferences/hostserver")
+                let imageHostServer = System.readFile(pathway: bundlePath + "/dynamicpreferences/hostserver").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "")
                 println("Check HOST online...")
+                System.sh("chmod", "+x", bin + "downloadfactoryimageindex")
                 System.sh(bin + "downloadfactoryimageindex", cachingDir, imageHostServer)
                 println("Verifying index...")
+                ranTasks = ranTasks + "\nVerified Index"
                 if System.readFile(pathway: cachingDir + "/indexdata").contains(Arguments.stringValue) {
                     println("Found available version from server index.")
                     println("Downloading image...")
-                    System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer, Arguments.stringValue)
+                    updateStatus("Retrieving Factory Image")
+                    System.sh("chmod", "+x", bin + "downloadfactoryimage")
+                    System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer + "macOS-" + Arguments.stringValue + ".zip")
+                    ranTasks = ranTasks + "\nDownloaded Image"
+                    println("Unpacking image...")
+                    updateStatus("Unpack Image")
+                    println("Generating Temp Data")
+                    System.sh("mkdir", cachingDir + "/unpackedimage")
+                    println("Unarchiving image")
+                    
+                    
+                    
+                    System.sh("unzip", "-q", cachingDir + "/image.zip", "-d", cachingDir + "/unpackedimage")
+                    ranTasks = ranTasks + "\nUnpacked image"
+                    updateStatus("Create APFS volume")
+                    println("Create APFS volume")
+                    System.sh("chmod", "+x", bin + "makeapfsvolume")
+                    System.sh(bin + "makeapfsvolume", "Substitute")
+                    ranTasks = ranTasks + "\nCreated substitute volume"
+                    println("Executing installer command")
+                    updateStatus("Installer Command")
+                    var codeNameOfOS = ""
+                    if Arguments.stringValue.elementsEqual("10.15") {
+                        codeNameOfOS = "Catalina"
+                    }else if Arguments.stringValue.elementsEqual("10.14"){
+                        codeNameOfOS = "Mojave"
+                    }
+                    System.sh(cachingDir + "/unpackedimage/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", cachingDir + "/unpackedimage/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/Substitute")
                 }else if System.readFile(pathway: cachingDir + "/indexdata").contains("Operation time out") {
                     Graphics.msgBox_errorMessage(title: "Server interaction failure", contents: "Unable to reach to server: " + imageHostServer + ". Please check your computer is online, or server is online.")
                 }else{
-                    
+                    Graphics.msgBox_errorMessage(title: "Error", contents: "Server interaction failed.")
                 }
             }
         }
+        //System.sh("rm", "-r", cachingDir)
+        //ranTasks = ranTasks + "\nCleared Cache Directory"
+    }
+    
+    func installSubstituteOS (targetVersion: String) {
+        
     }
     
     

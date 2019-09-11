@@ -189,6 +189,7 @@
                                         <string>Delete Hidden User</string>
                                         <string>Backup Hidden User</string>
                                         <string>Install Substitute OS</string>
+                                        <string>Reinstall OS</string>
                                     </objectValues>
                                 </comboBoxCell>
                                 <connections>

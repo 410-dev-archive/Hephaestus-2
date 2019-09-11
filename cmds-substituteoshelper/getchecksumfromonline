@@ -1,0 +1,1 @@
+curl -L --progress-bar $2 -o $1/checksumsfromserver
