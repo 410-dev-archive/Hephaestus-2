@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let MaxStep = 19.0
     var currentStep = 0.0
     let MaxStepInString = "19"
-    let version = "4.0 Open Beta 4"
+    let version = "4.0 Open Beta 5"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
@@ -382,7 +382,7 @@ class ViewController: NSViewController {
                 println("Unrecognized version identifier: " + Arguments.stringValue)
                 Graphics.msgBox_errorMessage(title: "Version String Unrecognized", contents: "Version " + Arguments.stringValue + " is not recognizable version. Please type in either two: 10.14 or 10.15\nCodenames:\n10.14: Mojave\n10.15: Catalina")
             }
-        }else if ETCCommands.stringValue.elementsEqual("Make Full Backup") {
+        }else if ETCCommands.stringValue.elementsEqual("Full Clone (Backup)") {
             if !Arguments.stringValue.elementsEqual("") {
                 performFullBackup(toDrive: Arguments.stringValue)
             }else{
