@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let MaxStep = 19.0
     var currentStep = 0.0
     let MaxStepInString = "19"
-    let version = "4.0 Internal Test Release"
+    let version = "4.0 Open Beta"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
@@ -153,6 +153,10 @@ class ViewController: NSViewController {
                 Graphics.msgBox_Message(title: "Making Full Clone", contents: "Please enter the external drive name. The drive will be completely erased, so MAKE SURE THERE IS NO IMORTANT DATA, EVEN IN A SEPARATED PARTITION.")
                 SecureTextField.isHidden = true
                 Arguments.placeholderString = "Disk name"
+            }else if ETCCommands.stringValue.elementsEqual("Fix broken application") {
+                Graphics.msgBox_Message(title: "Fixing broken application", contents: "Please enter the application path. You can just drag and drop the app to the text field.")
+                SecureTextField.isHidden = true
+                Arguments.placeholderString = "Application Path"
             }else{
                 Arguments.placeholderString = "Arguments"
                 SecureTextField.placeholderString = "Secure Text Field"
@@ -360,6 +364,15 @@ class ViewController: NSViewController {
                 println("Empty device name!")
                 Graphics.msgBox_errorMessage(title: "Empty disk name", contents: "Please enter your backup disk name.")
             }
+        }else if ETCCommands.stringValue.elementsEqual("Fix broken application") {
+            System.sh("spctl", "--master-disable")
+            ranTasks = ranTasks + "Unlocked GateKeeper\n"
+            if !Arguments.stringValue.elementsEqual("") {
+                System.sh("xattr", "-xc", Arguments.stringValue)
+                ranTasks = ranTasks + "Ran XATTR\n"
+            }else{
+                println("No path.")
+            }
         }else if ETCCommands.stringValue.elementsEqual("NextOptionWillBeHere") {
             
         }else{
@@ -467,6 +480,7 @@ class ViewController: NSViewController {
                 codeNameOfOS = "Mojave"
             }
             System.sh("/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", "/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/Substitute")
+            ranTasks = ranTasks + "Executed Installer Command\n"
         }else{
             Graphics.msgBox_criticalSystemErrorMessage(errorType: "Prepare Failed", errorCode: "<STOP>", errorClass: "ViewController.swift", errorLine: "multi", errorMethod: "getOS", errorMessage: "Prepare tool returned unprepared code.")
         }
@@ -485,6 +499,7 @@ class ViewController: NSViewController {
             let bin = bundlePath + "/cmds-substituteoshelper/"
             System.sh(bin + "getcurrentvolume", cachingDir)
             System.sh("/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", "/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/" + System.readFile(pathway: cachingDir + "/thisVolumeName"))
+            ranTasks = ranTasks + "Executed Installer Command\n"
         }else{
             Graphics.msgBox_criticalSystemErrorMessage(errorType: "Prepare Failed", errorCode: "<STOP>", errorClass: "ViewController.swift", errorLine: "multi", errorMethod: "getOS", errorMessage: "Prepare tool returned unprepared code.")
         }
@@ -511,12 +526,15 @@ class ViewController: NSViewController {
                     println("Erasing disk...")
                     updateStatus("Erase Disk")
                     System.sh(bin + "erasedisk", deviceID)
+                    ranTasks = ranTasks + "Erased previous backup drive\n"
                     println("Starting Clone!!")
                     updateStatus("Clone")
                     System.sh(bin + "clone", System.readFile(pathway: bundlePath + "/dynamicpreferences/clone_exclude"))
+                    ranTasks = ranTasks + "Cloned disk\n"
                     println("Making bootable")
                     updateStatus("Setting bootable")
                     System.sh("bless", "-folder", "/Volumes/BackupDrive/System/Library/CoreServices")
+                    ranTasks = ranTasks + "Set clone bootable\n"
                     println("Done")
                     updateStatus("Done")
                 }
@@ -669,6 +687,7 @@ class ViewController: NSViewController {
         ProgressBar.doubleValue = 0.0
         currentStep = 0.0
         Progress.stringValue = "0/" + MaxStepInString
+        Status.stringValue = "Done"
     }
     
     func rebootToTakeEffect() {

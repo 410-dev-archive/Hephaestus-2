@@ -190,7 +190,7 @@
                                         <string>Backup Hidden User</string>
                                         <string>Install Substitute OS</string>
                                         <string>Reinstall OS</string>
-                                        <string>Create Offline Recovery</string>
+                                        <string>Fix broken application</string>
                                         <string>Full Clone (Backup)</string>
                                     </objectValues>
                                 </comboBoxCell>
