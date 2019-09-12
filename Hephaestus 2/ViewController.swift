@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let MaxStep = 19.0
     var currentStep = 0.0
     let MaxStepInString = "19"
-    let version = "4.0 Open Beta"
+    let version = "4.0 Open Beta 4"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
@@ -46,6 +46,8 @@ class ViewController: NSViewController {
     var noShowRanTask = false
     var skipBackup = false
     var dontEraseBackupAfterRestore = false
+    var ignoreDiskSpace = false
+    var installationTargetVersion = "10.15"
     
     override func viewDidLoad() {
         println("Hello from viewDidLoad().")
@@ -111,6 +113,7 @@ class ViewController: NSViewController {
         Arguments.isHidden = true
         SecureTextField.isHidden = true
         VersionString.stringValue = version
+        cachingDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "") + "/hephaestustmp"
         println("Ready.")
         Graphics.msgBox_Message(title: "Click Icon", contents: "Click Hephaestus 2 icon from the dock to show the window.")
         super.viewDidLoad()
@@ -139,24 +142,34 @@ class ViewController: NSViewController {
             if ETCCommands.stringValue.elementsEqual("Create Hidden User") {
                 Graphics.msgBox_Message(title: "Warning for Creating a Hidden User", contents: "Please notice that the username should NOT include space, and will be used for login.")
                 SecureTextField.isHidden = false
+                Arguments.isHidden = false
                 Arguments.placeholderString = "Username"
                 SecureTextField.placeholderString = "Password"
             }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
                 Graphics.msgBox_Message(title: "Installing Substitute OS", contents: "Please enter the version you want to install.\nDeprecated version cannot be installed.\nPlease notice: Check wheter your Mac supports the OS.\nPlease notice: If your primary boot drive is NOT APFS, substitute installation will not work.\nAvailable versions: 10.14 / 10.15")
                 SecureTextField.isHidden = true
+                Arguments.isHidden = false
                 Arguments.placeholderString = "OS Version (10.14 / 10.15)"
             }else if ETCCommands.stringValue.elementsEqual("Reinstall OS") {
                 Graphics.msgBox_Message(title: "Reinstalling OS", contents: "Please enter the version you want to install.\nDeprecated version cannot be installed.\nPlease notice: Check wheter your Mac supports the OS.\nAvailable versions: 10.14 / 10.15")
                 SecureTextField.isHidden = true
+                Arguments.isHidden = false
                 Arguments.placeholderString = "OS Version (10.14 / 10.15)"
             }else if ETCCommands.stringValue.elementsEqual("Full Clone (Backup)") {
                 Graphics.msgBox_Message(title: "Making Full Clone", contents: "Please enter the external drive name. The drive will be completely erased, so MAKE SURE THERE IS NO IMORTANT DATA, EVEN IN A SEPARATED PARTITION.")
                 SecureTextField.isHidden = true
+                Arguments.isHidden = false
                 Arguments.placeholderString = "Disk name"
             }else if ETCCommands.stringValue.elementsEqual("Fix broken application") {
                 Graphics.msgBox_Message(title: "Fixing broken application", contents: "Please enter the application path. You can just drag and drop the app to the text field.")
                 SecureTextField.isHidden = true
+                Arguments.isHidden = false
                 Arguments.placeholderString = "Application Path"
+            }else if ETCCommands.stringValue.elementsEqual("Enable O-ROM Boot") {
+                Graphics.msgBox_Message(title: "Enabling O-ROM Boot", contents: "O-ROM boot enabling requires unlocked firmware password. The tool will check whether the firmware lock is enabled or not, and if the firmware lock is enabled, the app may crash. If firmware lock is enabled, please turn it OFF. Firmware lock is turned off in default.")
+                SecureTextField.isHidden = true
+                Arguments.isHidden = true
+                Arguments.placeholderString = "Arguments"
             }else{
                 Arguments.placeholderString = "Arguments"
                 SecureTextField.placeholderString = "Secure Text Field"
@@ -265,7 +278,7 @@ class ViewController: NSViewController {
             let command = ETCCommands.stringValue
             if ETCCommands.stringValue.elementsEqual("debug.help") {
                 noShowRanTask = true
-                Graphics.msgBox_Message(title: "Available Debug commands", contents: "debug.full-erase-kisutils\ndebug.erase-backup\ndebug.erase-libs\ndebug.noerase-backup-after-restore")
+                Graphics.msgBox_Message(title: "Available Debug commands", contents: "debug.full-erase-kisutils\ndebug.erase-backup\ndebug.erase-libs\ndebug.noerase-backup-after-restore\ndebug.ignore-spacecheck")
             }else if command.elementsEqual("debug.full-erase-kisutils") {
                 skipBackup = true
                 Graphics.msgBox_Message(title: "Attention!", contents: "Backup will be skipped when liberation. This will disable restoration too, which will permanently erase LanSchool from your Mac. To disable skip, relaunch Hephaestus.")
@@ -297,6 +310,10 @@ class ViewController: NSViewController {
                 noShowRanTask = true
                 Graphics.msgBox_Message(title: "Attention!", contents: "Backup will not be removed after restore. This option will disable automatically once you've restarted the app.")
                 dontEraseBackupAfterRestore = true
+            }else if command.elementsEqual("debug.ignore-spacecheck") {
+                noShowRanTask = true
+                Graphics.msgBox_Message(title: "Attention!", contents: "This option will disable checking disk space. This option will disable automatically once you've restarted the app.")
+                ignoreDiskSpace = true
             }else if command.elementsEqual("debug.erase-backup") {
                 if Graphics.msgBox_QMessage(title: "Erase Package Manager?", contents: "Would you uninstall the mpkg: package manager?\nWARNING: IF YOU HAVE INSTALLED OTHER PACKAGES THROUGH MPKG, DO NOT ERASE.") {
                     updateStatus("Erasing backup")
@@ -316,17 +333,21 @@ class ViewController: NSViewController {
                 if currentVersion > 10.14{
                     println("deprecated version: 10.14")
                     if Graphics.msgBox_QMessage(title: "deprecated version", contents: "10.14 is not installable because it is deprecated version. Would you install the lowest version availabe? (" + String(currentVersion) + ")") {
+                        installationTargetVersion = String(currentVersion)
                         installSubstituteOS(targetVersion: String(currentVersion))
                     }else{
+                        noShowRanTask = true
                         println("Aborted.")
                         Graphics.msgBox_Message(title: "Aborted", contents: "Aborted installing substitute OS.")
                     }
                 }else{
                     println("Will install: 10.14")
+                    installationTargetVersion = "10.14"
                     installSubstituteOS(targetVersion: "10.14")
                 }
             }else if Arguments.stringValue.elementsEqual("10.15") {
                 println("Will install: 10.15")
+                installationTargetVersion = "10.15"
                 installSubstituteOS(targetVersion: "10.15")
             }else{
                 updateStatus("Ready")
@@ -339,17 +360,21 @@ class ViewController: NSViewController {
                 if currentVersion > 10.14{
                     println("deprecated version: 10.14")
                     if Graphics.msgBox_QMessage(title: "Deprecated version", contents: "10.14 is not installable because it is deprecated version. Would you install the lowest version availabe? (" + String(currentVersion) + ")") {
+                        installationTargetVersion = String(currentVersion)
                         installSubstituteOS(targetVersion: String(currentVersion))
                     }else{
+                        noShowRanTask = true
                         println("Aborted.")
                         Graphics.msgBox_Message(title: "Aborted", contents: "Aborted installing substitute OS.")
                     }
                 }else{
                     println("Will install: 10.14")
+                    installationTargetVersion = "10.14"
                     installSubstituteOS(targetVersion: "10.14")
                 }
             }else if Arguments.stringValue.elementsEqual("10.15") {
                 println("Will install: 10.15")
+                installationTargetVersion = "10.15"
                 installSubstituteOS(targetVersion: "10.15")
             }else{
                 updateStatus("Ready")
@@ -372,6 +397,22 @@ class ViewController: NSViewController {
                 ranTasks = ranTasks + "Ran XATTR\n"
             }else{
                 println("No path.")
+            }
+        }else if ETCCommands.stringValue.elementsEqual("Enable O-ROM Boot") {
+            println("Checking firmware lock...")
+            updateStatus("Check FWL")
+            System.sh(bin + "timeout", "4")
+            System.sh(bundlePath + "/bootstraps/checkFwl", cachingDir)
+            if System.readFile(pathway: cachingDir + "/fwlstatus").contains("No") {
+                println("Enabling orom...")
+                updateStatus("Modify NVRAM")
+                System.sh(bin + "timeout", "1")
+                updateStatus("Enabling OROM")
+                System.sh("nvram", "enable-legacy-orom-behavior=1")
+                ranTasks = ranTasks + "Enabled O-ROM with NVRAM\n"
+            }else{
+                Graphics.msgBox_errorMessage(title: "Locked", contents: "Firmware is locked with firware password. Remove it first to resume.")
+                noShowRanTask = true
             }
         }else if ETCCommands.stringValue.elementsEqual("NextOptionWillBeHere") {
             
@@ -406,7 +447,7 @@ class ViewController: NSViewController {
             System.sh(bin + "getDiskSpace", cachingDir)
             let rawData = System.readFile(pathway: cachingDir + "/availableDiskSpace")
             let availableVolume = Double(rawData.replacingOccurrences(of: " ", with: "").components(separatedBy: "Gi")[2])
-            if availableVolume! <= 20 {
+            if availableVolume! <= 32 && !ignoreDiskSpace {
                 println("Not enough disk space!")
                 Graphics.msgBox_errorMessage(title: "Insufficient Disk Space", contents: "Your boot drive MUST have an empty space that is larger than 32GB. Please clear up your Time Machine Snapshots if you have any.")
                 stop = true
@@ -418,13 +459,13 @@ class ViewController: NSViewController {
                 System.sh(bin + "downloadfactoryimageindex", cachingDir, imageHostServer)
                 println("Verifying index...")
                 ranTasks = ranTasks + "\nVerified Index"
-                if System.readFile(pathway: cachingDir + "/indexdata").contains(Arguments.stringValue) {
+                if System.readFile(pathway: cachingDir + "/indexdata").contains(installationTargetVersion) {
                     println("Found available version from server index.")
                     println("Downloading image...")
                     updateStatus("Retrieving Factory Image")
                     if !System.checkFile(pathway: cachingDir + "/image.dmg") {
                         System.sh("chmod", "+x", bin + "downloadfactoryimage")
-                        System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer + "macOS-" + Arguments.stringValue + ".dmg")
+                        System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer + "macOS-" + installationTargetVersion + ".dmg")
                         ranTasks = ranTasks + "\nDownloaded Image"
                     }else{
                         println("Image already downloaded.")
@@ -436,9 +477,9 @@ class ViewController: NSViewController {
                     println("Mounting image")
                     System.sh("hdiutil", "attach", cachingDir + "/image.dmg")
                     var codeNameOfOS = ""
-                    if Arguments.stringValue.elementsEqual("10.15") {
+                    if installationTargetVersion.elementsEqual("10.15") {
                         codeNameOfOS = "Catalina"
-                    }else if Arguments.stringValue.elementsEqual("10.14"){
+                    }else if installationTargetVersion.elementsEqual("10.14"){
                         codeNameOfOS = "Mojave"
                     }
                     println("Copying Image to /Applications")
@@ -449,8 +490,8 @@ class ViewController: NSViewController {
                     System.sh("hdiutil", "detach", "/Volumes/macOS-" + targetVersion)
                     println("Clean up")
                     updateStatus("Clean up")
-                    //System.sh("rm", "-r", cachingDir)
-                    //ranTasks = ranTasks + "\nCleared Cache Directory"
+                    System.sh("rm", "-r", cachingDir)
+                    ranTasks = ranTasks + "\nCleared Cache Directory"
                 }else if System.readFile(pathway: cachingDir + "/indexdata").contains("Operation time out") {
                     Graphics.msgBox_errorMessage(title: "Server interaction failure", contents: "Unable to reach to server: " + imageHostServer + ". Please check your computer is online, or server is online.")
                     stop = true
@@ -519,7 +560,7 @@ class ViewController: NSViewController {
                 System.sh(bin + "getdestdiskspace", cachingDir, toDrive)
                 let SysVolSize = Double(System.readFile(pathway: cachingDir + "/localdiskspace").components(separatedBy: " ")[1].components(separatedBy: "Gi")[0].replacingOccurrences(of: " ", with: ""))
                 let RmtVolSize = Double(System.readFile(pathway: cachingDir + "/targetdiskspace").components(separatedBy: " ")[1].components(separatedBy: "Gi")[0].replacingOccurrences(of: " ", with: ""))
-                if SysVolSize! > RmtVolSize! {
+                if SysVolSize! > RmtVolSize! && !ignoreDiskSpace {
                     println("Too small!!!")
                     Graphics.msgBox_errorMessage(title: "Target Disk Too Small", contents: "The target disk has to be larger or equal than the local disk size.")
                 }else{
@@ -539,6 +580,7 @@ class ViewController: NSViewController {
                     updateStatus("Done")
                 }
             }else{
+                noShowRanTask = true
                 println("Aborted.")
                 Graphics.msgBox_Message(title: "Aborted", contents: "Stopped performing backup.")
             }

@@ -1,0 +1,5 @@
+Stat=$(firmwarepasswd -check)
+if [[ ! -d $1 ]]; then
+    mkdir $1
+fi 
+echo $Stat > $1/fwlstatus
