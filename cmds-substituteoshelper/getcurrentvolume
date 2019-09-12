@@ -1,0 +1,2 @@
+Boot=$(diskutil info / | sed -n 's/^   Volume Name:              //p')
+echo $Boot > $1/thisVolumeName

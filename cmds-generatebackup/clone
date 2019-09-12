@@ -1,0 +1,2 @@
+RootDisk=$(diskutil info / | sed -n 's/^   Volume Name:               //p')
+sudo rsync --archive --delete --delete-excluded --hard-links --one-file-system --sparse --verbose --exclude-from=$1 "/Volumes/$RootDisk" /Volumes/BackupDrive

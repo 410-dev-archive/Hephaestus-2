@@ -17,6 +17,7 @@
 		C32ED20A2316223800294A3A /* bootstraps in Resources */ = {isa = PBXBuildFile; fileRef = C32ED2092316223800294A3A /* bootstraps */; };
 		C343EB612324148D004231B1 /* dynamicpreferences in Resources */ = {isa = PBXBuildFile; fileRef = C343EB602324148D004231B1 /* dynamicpreferences */; };
 		C343EB6323241513004231B1 /* cmds-substituteoshelper in Resources */ = {isa = PBXBuildFile; fileRef = C343EB6223241513004231B1 /* cmds-substituteoshelper */; };
+		C35C182523294ABF00099EC2 /* cmds-generatebackup in Resources */ = {isa = PBXBuildFile; fileRef = C35C182423294ABF00099EC2 /* cmds-generatebackup */; };
 		C3AF2C8823138B0000A3C7FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF2C8723138B0000A3C7FD /* ViewController.swift */; };
 		C3AF2C8A23138B0300A3C7FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3AF2C8923138B0300A3C7FD /* Assets.xcassets */; };
 		C3AF2C8D23138B0300A3C7FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3AF2C8B23138B0300A3C7FD /* Main.storyboard */; };
@@ -52,6 +53,7 @@
 		C32ED2092316223800294A3A /* bootstraps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bootstraps; sourceTree = "<group>"; };
 		C343EB602324148D004231B1 /* dynamicpreferences */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dynamicpreferences; sourceTree = "<group>"; };
 		C343EB6223241513004231B1 /* cmds-substituteoshelper */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "cmds-substituteoshelper"; sourceTree = "<group>"; };
+		C35C182423294ABF00099EC2 /* cmds-generatebackup */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "cmds-generatebackup"; sourceTree = "<group>"; };
 		C3AF2C8223138B0000A3C7FD /* Hephaestus 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hephaestus 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3AF2C8723138B0000A3C7FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C3AF2C8923138B0300A3C7FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				C3168FB2231EBB6A000370AA /* Button_Regular.png */,
 				C3168FB3231EBB6A000370AA /* Button_Warning.png */,
 				C3168FB7231EBBC7000370AA /* Logo.png */,
+				C35C182423294ABF00099EC2 /* cmds-generatebackup */,
 				C343EB6223241513004231B1 /* cmds-substituteoshelper */,
 				C343EB602324148D004231B1 /* dynamicpreferences */,
 				C32ED2092316223800294A3A /* bootstraps */,
@@ -258,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C35C182523294ABF00099EC2 /* cmds-generatebackup in Resources */,
 				C3168FB0231EBB4D000370AA /* Info.plist in Resources */,
 				C343EB6323241513004231B1 /* cmds-substituteoshelper in Resources */,
 				C3168FB4231EBB6A000370AA /* Button_Error.png in Resources */,

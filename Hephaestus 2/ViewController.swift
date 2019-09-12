@@ -33,6 +33,7 @@ class ViewController: NSViewController {
     let minimumOSCompatibility = 10.14
     let maximumOSCompatibility = 10.15
     var currentVersion = 0.0
+    var cachingDir = ""
     
     let bin = "/usr/local/Libertas/Library/scripts/"
     let backupPath = "/usr/local/Libertas/Library/distribution/Hephaestus2/backup"
@@ -48,6 +49,7 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         println("Hello from viewDidLoad().")
+        println("Hephaestus 2 v." + version)
         println("Loading OS information...")
         let os = ProcessInfo().operatingSystemVersion
         println("Version detected: " + String(os.majorVersion) + "." + String(os.minorVersion))
@@ -140,9 +142,17 @@ class ViewController: NSViewController {
                 Arguments.placeholderString = "Username"
                 SecureTextField.placeholderString = "Password"
             }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
-                Graphics.msgBox_Message(title: "Installing Substitute OS", contents: "Please enter the version you want to install.\nPlease notice: Check wheter your Mac supports the OS.\nPlease notice: If your primary boot drive is NOT APFS, substitute installation will not work.\nAvailable versions: 10.14 / 10.15")
+                Graphics.msgBox_Message(title: "Installing Substitute OS", contents: "Please enter the version you want to install.\nDeprecated version cannot be installed.\nPlease notice: Check wheter your Mac supports the OS.\nPlease notice: If your primary boot drive is NOT APFS, substitute installation will not work.\nAvailable versions: 10.14 / 10.15")
                 SecureTextField.isHidden = true
                 Arguments.placeholderString = "OS Version (10.14 / 10.15)"
+            }else if ETCCommands.stringValue.elementsEqual("Reinstall OS") {
+                Graphics.msgBox_Message(title: "Reinstalling OS", contents: "Please enter the version you want to install.\nDeprecated version cannot be installed.\nPlease notice: Check wheter your Mac supports the OS.\nAvailable versions: 10.14 / 10.15")
+                SecureTextField.isHidden = true
+                Arguments.placeholderString = "OS Version (10.14 / 10.15)"
+            }else if ETCCommands.stringValue.elementsEqual("Full Clone (Backup)") {
+                Graphics.msgBox_Message(title: "Making Full Clone", contents: "Please enter the external drive name. The drive will be completely erased, so MAKE SURE THERE IS NO IMORTANT DATA, EVEN IN A SEPARATED PARTITION.")
+                SecureTextField.isHidden = true
+                Arguments.placeholderString = "Disk name"
             }else{
                 Arguments.placeholderString = "Arguments"
                 SecureTextField.placeholderString = "Secure Text Field"
@@ -298,11 +308,21 @@ class ViewController: NSViewController {
                 Graphics.msgBox_errorMessage(title: "Error", contents: "No such debug command.")
             }
         }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
-            if Arguments.stringValue.elementsEqual("10.14") {
-                println("Will install: 10.14")
-                installSubstituteOS(targetVersion: "10.14")
+            if Arguments.stringValue.elementsEqual("10.14"){
+                if currentVersion > 10.14{
+                    println("deprecated version: 10.14")
+                    if Graphics.msgBox_QMessage(title: "deprecated version", contents: "10.14 is not installable because it is deprecated version. Would you install the lowest version availabe? (" + String(currentVersion) + ")") {
+                        installSubstituteOS(targetVersion: String(currentVersion))
+                    }else{
+                        println("Aborted.")
+                        Graphics.msgBox_Message(title: "Aborted", contents: "Aborted installing substitute OS.")
+                    }
+                }else{
+                    println("Will install: 10.14")
+                    installSubstituteOS(targetVersion: "10.14")
+                }
             }else if Arguments.stringValue.elementsEqual("10.15") {
-                println("Will install: 10.14")
+                println("Will install: 10.15")
                 installSubstituteOS(targetVersion: "10.15")
             }else{
                 updateStatus("Ready")
@@ -311,8 +331,36 @@ class ViewController: NSViewController {
                 Graphics.msgBox_errorMessage(title: "Version String Unrecognized", contents: "Version " + Arguments.stringValue + " is not recognizable version. Please type in either two: 10.14 or 10.15\nCodenames:\n10.14: Mojave\n10.15: Catalina")
             }
         }else if ETCCommands.stringValue.elementsEqual("Reinstall OS") {
-            
-        }else if ETCCommands.stringValue.elementsEqual("Install Substitute OS") {
+            if Arguments.stringValue.elementsEqual("10.14"){
+                if currentVersion > 10.14{
+                    println("deprecated version: 10.14")
+                    if Graphics.msgBox_QMessage(title: "Deprecated version", contents: "10.14 is not installable because it is deprecated version. Would you install the lowest version availabe? (" + String(currentVersion) + ")") {
+                        installSubstituteOS(targetVersion: String(currentVersion))
+                    }else{
+                        println("Aborted.")
+                        Graphics.msgBox_Message(title: "Aborted", contents: "Aborted installing substitute OS.")
+                    }
+                }else{
+                    println("Will install: 10.14")
+                    installSubstituteOS(targetVersion: "10.14")
+                }
+            }else if Arguments.stringValue.elementsEqual("10.15") {
+                println("Will install: 10.15")
+                installSubstituteOS(targetVersion: "10.15")
+            }else{
+                updateStatus("Ready")
+                currentStep = 0.0
+                println("Unrecognized version identifier: " + Arguments.stringValue)
+                Graphics.msgBox_errorMessage(title: "Version String Unrecognized", contents: "Version " + Arguments.stringValue + " is not recognizable version. Please type in either two: 10.14 or 10.15\nCodenames:\n10.14: Mojave\n10.15: Catalina")
+            }
+        }else if ETCCommands.stringValue.elementsEqual("Make Full Backup") {
+            if !Arguments.stringValue.elementsEqual("") {
+                performFullBackup(toDrive: Arguments.stringValue)
+            }else{
+                println("Empty device name!")
+                Graphics.msgBox_errorMessage(title: "Empty disk name", contents: "Please enter your backup disk name.")
+            }
+        }else if ETCCommands.stringValue.elementsEqual("NextOptionWillBeHere") {
             
         }else{
             noShowRanTask = true
@@ -320,34 +368,35 @@ class ViewController: NSViewController {
         }
     }
     
-    func installOS(targetVersion: String) {
+    func getOS(targetVersion: String) -> Bool {
+        var stop = false
         updateStatus("Set BIN")
         let bin = bundlePath + "/cmds-substituteoshelper/"
         updateStatus("Create Caching Drive")
-        var cachingDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser")
-        cachingDir = cachingDir.replacingOccurrences(of: "\n", with: "")
-        cachingDir = cachingDir + "/hephaestustmp"
         println("Caching drive: " + cachingDir)
-        System.sh("mkdir", cachingDir)
-        ranTasks = ranTasks + "\nCreated Caching Drive"
+        if !System.checkFile(pathway: cachingDir) {
+            System.sh("mkdir", cachingDir)
+            ranTasks = ranTasks + "\nCreated Caching Drive"
+        }
         println("Setting helpers with chmod +x")
-        System.sh("chmod", "+x", bin + "getDiskType")
-        System.sh("chmod", "+x", bin + "getDiskSpace")
+        System.sh("chmod", "+x", bin + "*")
         updateStatus("Getting Bootdrive Type")
         System.sh(bin + "getDiskType", cachingDir)
         ranTasks = ranTasks + "\nVerified Disk type"
         if !System.checkFile(pathway: cachingDir + "/isAPFS") {
             println("BOOT DRIVE IS NOT APFS!")
             Graphics.msgBox_errorMessage(title: "Non-APFS Bootdrive", contents: "It seems your root drive is not an APFS Volume (Failed verification). Please convert it first, then resume.")
+            stop = true
         }else{
             println("Checking available disk space")
             updateStatus("Check disk space")
             System.sh(bin + "getDiskSpace", cachingDir)
             let rawData = System.readFile(pathway: cachingDir + "/availableDiskSpace")
             let availableVolume = Double(rawData.replacingOccurrences(of: " ", with: "").components(separatedBy: "Gi")[2])
-            if availableVolume! <= 32 {
+            if availableVolume! <= 20 {
                 println("Not enough disk space!")
                 Graphics.msgBox_errorMessage(title: "Insufficient Disk Space", contents: "Your boot drive MUST have an empty space that is larger than 32GB. Please clear up your Time Machine Snapshots if you have any.")
+                stop = true
             }else{
                 updateStatus("Request for factory image")
                 let imageHostServer = System.readFile(pathway: bundlePath + "/dynamicpreferences/hostserver").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "")
@@ -360,46 +409,125 @@ class ViewController: NSViewController {
                     println("Found available version from server index.")
                     println("Downloading image...")
                     updateStatus("Retrieving Factory Image")
-                    System.sh("chmod", "+x", bin + "downloadfactoryimage")
-                    System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer + "macOS-" + Arguments.stringValue + ".zip")
-                    ranTasks = ranTasks + "\nDownloaded Image"
+                    if !System.checkFile(pathway: cachingDir + "/image.dmg") {
+                        System.sh("chmod", "+x", bin + "downloadfactoryimage")
+                        System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer + "macOS-" + Arguments.stringValue + ".dmg")
+                        ranTasks = ranTasks + "\nDownloaded Image"
+                    }else{
+                        println("Image already downloaded.")
+                    }
                     println("Unpacking image...")
                     updateStatus("Unpack Image")
                     println("Generating Temp Data")
                     System.sh("mkdir", cachingDir + "/unpackedimage")
-                    println("Unarchiving image")
-                    
-                    
-                    
-                    System.sh("unzip", "-q", cachingDir + "/image.zip", "-d", cachingDir + "/unpackedimage")
-                    ranTasks = ranTasks + "\nUnpacked image"
-                    updateStatus("Create APFS volume")
-                    println("Create APFS volume")
-                    System.sh("chmod", "+x", bin + "makeapfsvolume")
-                    System.sh(bin + "makeapfsvolume", "Substitute")
-                    ranTasks = ranTasks + "\nCreated substitute volume"
-                    println("Executing installer command")
-                    updateStatus("Installer Command")
+                    println("Mounting image")
+                    System.sh("hdiutil", "attach", cachingDir + "/image.dmg")
                     var codeNameOfOS = ""
                     if Arguments.stringValue.elementsEqual("10.15") {
                         codeNameOfOS = "Catalina"
                     }else if Arguments.stringValue.elementsEqual("10.14"){
                         codeNameOfOS = "Mojave"
                     }
-                    System.sh(cachingDir + "/unpackedimage/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", cachingDir + "/unpackedimage/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/Substitute")
+                    println("Copying Image to /Applications")
+                    updateStatus("Moving to permastorage")
+                    System.sh("cp", "-r", "/Volumes/macOS-" + targetVersion + "/Install macOS " + codeNameOfOS + ".app", "/Applications/")
+                    println("Detaching image")
+                    updateStatus("Detach Image")
+                    System.sh("hdiutil", "detach", "/Volumes/macOS-" + targetVersion)
+                    println("Clean up")
+                    updateStatus("Clean up")
+                    //System.sh("rm", "-r", cachingDir)
+                    //ranTasks = ranTasks + "\nCleared Cache Directory"
                 }else if System.readFile(pathway: cachingDir + "/indexdata").contains("Operation time out") {
                     Graphics.msgBox_errorMessage(title: "Server interaction failure", contents: "Unable to reach to server: " + imageHostServer + ". Please check your computer is online, or server is online.")
+                    stop = true
                 }else{
                     Graphics.msgBox_errorMessage(title: "Error", contents: "Server interaction failed.")
+                    stop = true
                 }
             }
         }
-        //System.sh("rm", "-r", cachingDir)
-        //ranTasks = ranTasks + "\nCleared Cache Directory"
+        return stop
     }
     
     func installSubstituteOS (targetVersion: String) {
-        
+        if !getOS(targetVersion: targetVersion) {
+            let bin = bundlePath + "/cmds-substituteoshelper/"
+            updateStatus("Create APFS volume")
+            println("Create APFS volume")
+            System.sh("chmod", "+x", bin + "makeapfsvolume")
+            System.sh(bin + "makeapfsvolume", "Substitute")
+            ranTasks = ranTasks + "\nCreated substitute volume"
+            println("Executing installer command")
+            updateStatus("Installer Command")
+            var codeNameOfOS = ""
+            if Arguments.stringValue.elementsEqual("10.15") {
+                codeNameOfOS = "Catalina"
+            }else if Arguments.stringValue.elementsEqual("10.14"){
+                codeNameOfOS = "Mojave"
+            }
+            System.sh("/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", "/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/Substitute")
+        }else{
+            Graphics.msgBox_criticalSystemErrorMessage(errorType: "Prepare Failed", errorCode: "<STOP>", errorClass: "ViewController.swift", errorLine: "multi", errorMethod: "getOS", errorMessage: "Prepare tool returned unprepared code.")
+        }
+    }
+    
+    func reinstallOS (targetVersion: String) {
+        if !getOS(targetVersion: targetVersion) {
+            println("Executing installer command")
+            updateStatus("Installer Command")
+            var codeNameOfOS = ""
+            if Arguments.stringValue.elementsEqual("10.15") {
+                codeNameOfOS = "Catalina"
+            }else if Arguments.stringValue.elementsEqual("10.14"){
+                codeNameOfOS = "Mojave"
+            }
+            let bin = bundlePath + "/cmds-substituteoshelper/"
+            System.sh(bin + "getcurrentvolume", cachingDir)
+            System.sh("/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", "/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/" + System.readFile(pathway: cachingDir + "/thisVolumeName"))
+        }else{
+            Graphics.msgBox_criticalSystemErrorMessage(errorType: "Prepare Failed", errorCode: "<STOP>", errorClass: "ViewController.swift", errorLine: "multi", errorMethod: "getOS", errorMessage: "Prepare tool returned unprepared code.")
+        }
+    }
+    
+    func performFullBackup (toDrive: String) {
+        if System.checkFile(pathway: toDrive) {
+            if Graphics.msgBox_QMessage(title: "ERASE DISK", contents: "The target disk will be fully erased. The partition map will be re-written, therefore other partitions on the disk will be cleaned. Are you sure you have backed up your data in the disk, and continue?") {
+                println("Grab disk identifier")
+                updateStatus("Grabbing Device ID")
+                let bin = bundlePath + "/cmds-generatebackup/"
+                System.sh(bin + "grabDiskIdentifier", cachingDir, toDrive)
+                let deviceID = System.readFile(pathway: cachingDir + "/deviceID")
+                println("Checking disk size")
+                updateStatus("Checking Disk Size")
+                System.sh(bin + "getlocaldiskspace", cachingDir)
+                System.sh(bin + "getdestdiskspace", cachingDir, toDrive)
+                let SysVolSize = Double(System.readFile(pathway: cachingDir + "/localdiskspace").components(separatedBy: " ")[1].components(separatedBy: "Gi")[0].replacingOccurrences(of: " ", with: ""))
+                let RmtVolSize = Double(System.readFile(pathway: cachingDir + "/targetdiskspace").components(separatedBy: " ")[1].components(separatedBy: "Gi")[0].replacingOccurrences(of: " ", with: ""))
+                if SysVolSize! > RmtVolSize! {
+                    println("Too small!!!")
+                    Graphics.msgBox_errorMessage(title: "Target Disk Too Small", contents: "The target disk has to be larger or equal than the local disk size.")
+                }else{
+                    println("Erasing disk...")
+                    updateStatus("Erase Disk")
+                    System.sh(bin + "erasedisk", deviceID)
+                    println("Starting Clone!!")
+                    updateStatus("Clone")
+                    System.sh(bin + "clone", System.readFile(pathway: bundlePath + "/dynamicpreferences/clone_exclude"))
+                    println("Making bootable")
+                    updateStatus("Setting bootable")
+                    System.sh("bless", "-folder", "/Volumes/BackupDrive/System/Library/CoreServices")
+                    println("Done")
+                    updateStatus("Done")
+                }
+            }else{
+                println("Aborted.")
+                Graphics.msgBox_Message(title: "Aborted", contents: "Stopped performing backup.")
+            }
+        }else{
+            println("Not found.")
+            Graphics.msgBox_errorMessage(title: "Disk does not exists", contents: "The selected backup disk does not exists.")
+        }
     }
     
     

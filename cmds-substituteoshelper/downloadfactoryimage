@@ -1,1 +1,1 @@
-curl -L --progress-bar $2 -o $1/image.zip
+curl -L --progress-bar $2 -o $1/image.dmg
