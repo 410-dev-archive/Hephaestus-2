@@ -65,6 +65,7 @@
 		C3AF2C9F23138B0300A3C7FD /* Hephaestus 2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hephaestus 2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3AF2CA323138B0300A3C7FD /* Hephaestus_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hephaestus_2UITests.swift; sourceTree = "<group>"; };
 		C3AF2CA523138B0300A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3BD90A1232D41B0000A96DD /* Hephaestus 2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Hephaestus 2.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +124,7 @@
 		C3AF2C8423138B0000A3C7FD /* Hephaestus 2 */ = {
 			isa = PBXGroup;
 			children = (
+				C3BD90A1232D41B0000A96DD /* Hephaestus 2.entitlements */,
 				C3168FAB231EBB15000370AA /* CoreLevelCompatibilityLayer.swift */,
 				C3168FAD231EBB38000370AA /* AppDelegate.swift */,
 				C3AF2C8723138B0000A3C7FD /* ViewController.swift */,
@@ -464,16 +466,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Hephaestus 2/Hephaestus 2.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "190912-OB4-THXG_Edition";
+				CURRENT_PROJECT_VERSION = "190915-OB6-THXG_Edition";
 				INFOPLIST_FILE = "Hephaestus 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 4.0OpenBeta4;
+				MARKETING_VERSION = 4.0OpenBeta6;
 				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -484,16 +487,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Hephaestus 2/Hephaestus 2.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "190912-OB4-THXG_Edition";
+				CURRENT_PROJECT_VERSION = "190915-OB6-THXG_Edition";
 				INFOPLIST_FILE = "Hephaestus 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 4.0OpenBeta4;
+				MARKETING_VERSION = 4.0OpenBeta6;
 				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

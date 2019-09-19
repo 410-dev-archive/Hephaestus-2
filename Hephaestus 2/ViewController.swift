@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let MaxStep = 19.0
     var currentStep = 0.0
     let MaxStepInString = "19"
-    let version = "4.0 Open Beta 5"
+    let version = "4.0 Open Beta 6"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
@@ -60,7 +60,6 @@ class ViewController: NSViewController {
             currentVersion = 10.14
         case (10, 15, _):
             currentVersion = 10.15
-            Graphics.msgBox_Message(title: "Unconfirmed Environment", contents: "macOS 10.15 is not a tested environment. Please let the developer to know if there is a bug.")
         default:
             println("Version detected: " + String(os.majorVersion) + "." + String(os.minorVersion))
             currentVersion = 0
@@ -71,7 +70,6 @@ class ViewController: NSViewController {
             exit(1)
         }
         println("Setting script permission...")
-        System.sh("chmod", "+x", bundlePath + "/bootstraps/installbootstraps")
         println("Checking status...")
         if System.checkFile(pathway: Library + "COM/flags/jailbroken.stat") {
             println("Jailbroken.")
@@ -86,11 +84,10 @@ class ViewController: NSViewController {
             noRunRecord = true
             TargetTask.setEnabled(false, forSegment: 1)
             TargetTask.setSelected(true, forSegment: 0)
-            if !System.checkFile(pathway: "/Library/Application Support/LanSchool/student") {
+            if !System.checkFile(pathway: "/Library/Application Support/LanSchool/student.app") {
                 println("Non-KIS image.")
                 TargetTask.setEnabled(false, forSegment: 0)
                 TargetTask.setSelected(true, forSegment: 2)
-                Graphics.msgBox_Message(title: "Non-KIS Image", contents: "This system is not fully supported for Hephaestus Liberation. Only extra features will be enabled.")
                 ETCCommands.isHidden = false
                 Arguments.isHidden = false
                 if System.checkFile(pathway: "/usr/local/libhiddenuser/created.stat") {
@@ -115,7 +112,6 @@ class ViewController: NSViewController {
         VersionString.stringValue = version
         cachingDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "") + "/hephaestustmp"
         println("Ready.")
-        Graphics.msgBox_Message(title: "Click Icon", contents: "Click Hephaestus 2 icon from the dock to show the window.")
         super.viewDidLoad()
         super.viewWillAppear()
         super.viewDidAppear()
@@ -156,7 +152,7 @@ class ViewController: NSViewController {
                 Arguments.isHidden = false
                 Arguments.placeholderString = "OS Version (10.14 / 10.15)"
             }else if ETCCommands.stringValue.elementsEqual("Full Clone (Backup)") {
-                Graphics.msgBox_Message(title: "Making Full Clone", contents: "Please enter the external drive name. The drive will be completely erased, so MAKE SURE THERE IS NO IMORTANT DATA, EVEN IN A SEPARATED PARTITION.")
+                Graphics.msgBox_Message(title: "Making Full Clone", contents: "Please enter the external drive name. The drive / partition will be COMPLETELY deleted. Please store the contents somewhere in the safe place.\nThe operation may take up to several minutes to hours.")
                 SecureTextField.isHidden = true
                 Arguments.isHidden = false
                 Arguments.placeholderString = "Disk name"
@@ -208,6 +204,7 @@ class ViewController: NSViewController {
             updateStatus("Build Sector Library")
             updateStatus("Verify Install")
         }
+        cachingDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "") + "/hephaestustmp"
     }
     
     func actionExtra() {
@@ -361,7 +358,7 @@ class ViewController: NSViewController {
                     println("deprecated version: 10.14")
                     if Graphics.msgBox_QMessage(title: "Deprecated version", contents: "10.14 is not installable because it is deprecated version. Would you install the lowest version availabe? (" + String(currentVersion) + ")") {
                         installationTargetVersion = String(currentVersion)
-                        installSubstituteOS(targetVersion: String(currentVersion))
+                        reinstallOS(targetVersion: String(currentVersion))
                     }else{
                         noShowRanTask = true
                         println("Aborted.")
@@ -370,12 +367,12 @@ class ViewController: NSViewController {
                 }else{
                     println("Will install: 10.14")
                     installationTargetVersion = "10.14"
-                    installSubstituteOS(targetVersion: "10.14")
+                    reinstallOS(targetVersion: "10.14")
                 }
             }else if Arguments.stringValue.elementsEqual("10.15") {
                 println("Will install: 10.15")
                 installationTargetVersion = "10.15"
-                installSubstituteOS(targetVersion: "10.15")
+                reinstallOS(targetVersion: "10.15")
             }else{
                 updateStatus("Ready")
                 currentStep = 0.0
@@ -388,6 +385,7 @@ class ViewController: NSViewController {
             }else{
                 println("Empty device name!")
                 Graphics.msgBox_errorMessage(title: "Empty disk name", contents: "Please enter your backup disk name.")
+                noShowRanTask = true
             }
         }else if ETCCommands.stringValue.elementsEqual("Fix broken application") {
             System.sh("spctl", "--master-disable")
@@ -433,7 +431,6 @@ class ViewController: NSViewController {
             ranTasks = ranTasks + "\nCreated Caching Drive"
         }
         println("Setting helpers with chmod +x")
-        System.sh("chmod", "+x", bin + "*")
         updateStatus("Getting Bootdrive Type")
         System.sh(bin + "getDiskType", cachingDir)
         ranTasks = ranTasks + "\nVerified Disk type"
@@ -458,46 +455,34 @@ class ViewController: NSViewController {
                 System.sh("chmod", "+x", bin + "downloadfactoryimageindex")
                 System.sh(bin + "downloadfactoryimageindex", cachingDir, imageHostServer)
                 println("Verifying index...")
-                ranTasks = ranTasks + "\nVerified Index"
                 if System.readFile(pathway: cachingDir + "/indexdata").contains(installationTargetVersion) {
+                    ranTasks = ranTasks + "\nVerified Index"
                     println("Found available version from server index.")
                     println("Downloading image...")
-                    updateStatus("Retrieving Factory Image")
+                    updateStatus("Retrieving LW Factory Image")
                     if !System.checkFile(pathway: cachingDir + "/image.dmg") {
                         System.sh("chmod", "+x", bin + "downloadfactoryimage")
-                        System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer + "macOS-" + installationTargetVersion + ".dmg")
+                        System.sh(bin + "downloadfactoryimage", cachingDir, imageHostServer + "BaseSystem-" + installationTargetVersion + ".dmg")
                         ranTasks = ranTasks + "\nDownloaded Image"
                     }else{
                         println("Image already downloaded.")
                     }
                     println("Unpacking image...")
                     updateStatus("Unpack Image")
-                    println("Generating Temp Data")
-                    System.sh("mkdir", cachingDir + "/unpackedimage")
                     println("Mounting image")
                     System.sh("hdiutil", "attach", cachingDir + "/image.dmg")
-                    var codeNameOfOS = ""
-                    if installationTargetVersion.elementsEqual("10.15") {
-                        codeNameOfOS = "Catalina"
-                    }else if installationTargetVersion.elementsEqual("10.14"){
-                        codeNameOfOS = "Mojave"
-                    }
-                    println("Copying Image to /Applications")
-                    updateStatus("Moving to permastorage")
-                    System.sh("cp", "-r", "/Volumes/macOS-" + targetVersion + "/Install macOS " + codeNameOfOS + ".app", "/Applications/")
-                    println("Detaching image")
-                    updateStatus("Detach Image")
-                    System.sh("hdiutil", "detach", "/Volumes/macOS-" + targetVersion)
-                    println("Clean up")
-                    updateStatus("Clean up")
-                    System.sh("rm", "-r", cachingDir)
-                    ranTasks = ranTasks + "\nCleared Cache Directory"
+                }else if !System.readFile(pathway: cachingDir + "/indexdata").contains(installationTargetVersion){
+                    Graphics.msgBox_errorMessage(title: "Image not hosted", contents: "Image is not hosted from the server. Please check whether the server is under maintenance, or unsupported version.")
+                    stop = true
+                    noShowRanTask = true
                 }else if System.readFile(pathway: cachingDir + "/indexdata").contains("Operation time out") {
                     Graphics.msgBox_errorMessage(title: "Server interaction failure", contents: "Unable to reach to server: " + imageHostServer + ". Please check your computer is online, or server is online.")
                     stop = true
+                    noShowRanTask = true
                 }else{
                     Graphics.msgBox_errorMessage(title: "Error", contents: "Server interaction failed.")
                     stop = true
+                    noShowRanTask = true
                 }
             }
         }
@@ -509,7 +494,6 @@ class ViewController: NSViewController {
             let bin = bundlePath + "/cmds-substituteoshelper/"
             updateStatus("Create APFS volume")
             println("Create APFS volume")
-            System.sh("chmod", "+x", bin + "makeapfsvolume")
             System.sh(bin + "makeapfsvolume", "Substitute")
             ranTasks = ranTasks + "\nCreated substitute volume"
             println("Executing installer command")
@@ -520,40 +504,51 @@ class ViewController: NSViewController {
             }else if Arguments.stringValue.elementsEqual("10.14"){
                 codeNameOfOS = "Mojave"
             }
-            System.sh("/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", "/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/Substitute")
-            ranTasks = ranTasks + "Executed Installer Command\n"
+            if !System.checkFile(pathway: "/Volumes/macOS Base System/Install macOS " + codeNameOfOS + ".app/Contents/MacOS/") {
+                System.sh("open", "/Volumes/macOS Base System/Install macOS " + codeNameOfOS + " Beta.app/Contents/MacOS/InstallAssistant")
+                ranTasks = ranTasks + "Executed Installer Command\n"
+            }else{
+                System.sh("open", "/Volumes/macOS Base System/Install macOS " + codeNameOfOS + ".app/Contents/MacOS/InstallAssistant")
+                ranTasks = ranTasks + "Executed Installer Command\n"
+            }
+            Graphics.msgBox_Message(title: "MUST READ Instruction", contents: "This installer will help you to install a substitute OS. Please follow the steps to continue.\n\n1. Press Continue\n2. Agree to license if you do.\n3. Press Show All Disk.\n4. Select Substitute.\n5. Press Install.\n\nIf you completed it, you may close the app.")
         }else{
             Graphics.msgBox_criticalSystemErrorMessage(errorType: "Prepare Failed", errorCode: "<STOP>", errorClass: "ViewController.swift", errorLine: "multi", errorMethod: "getOS", errorMessage: "Prepare tool returned unprepared code.")
+            noShowRanTask = true
         }
     }
     
     func reinstallOS (targetVersion: String) {
         if !getOS(targetVersion: targetVersion) {
             println("Executing installer command")
-            updateStatus("Installer Command")
+            updateStatus("Installing")
             var codeNameOfOS = ""
-            if Arguments.stringValue.elementsEqual("10.15") {
+            if targetVersion.elementsEqual("10.15") {
                 codeNameOfOS = "Catalina"
-            }else if Arguments.stringValue.elementsEqual("10.14"){
+            }else if targetVersion.elementsEqual("10.14"){
                 codeNameOfOS = "Mojave"
             }
-            let bin = bundlePath + "/cmds-substituteoshelper/"
-            System.sh(bin + "getcurrentvolume", cachingDir)
-            System.sh("/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--applicationpath", "/Applications/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--volume", "/Volumes/" + System.readFile(pathway: cachingDir + "/thisVolumeName"))
-            ranTasks = ranTasks + "Executed Installer Command\n"
+            if !System.checkFile(pathway: "/Volumes/macOS Base System/Install macOS " + codeNameOfOS + ".app/Contents/MacOS/") {
+                System.sh("/Volumes/macOS Base System/Install macOS " + codeNameOfOS + " Beta.app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--eraseinstall", "--newvolumename", "Macintosh HD")
+            }else{
+                System.sh("/Volumes/macOS Base System/Install macOS " + codeNameOfOS + ".app/Contents/Resources/startosinstall", "--nointeraction", "--agreetolicense", "--eraseinstall", "--newvolumename", "Macintosh HD")
+            }
+            ranTasks = ranTasks + "\nExecuted Installer Command"
         }else{
+            noShowRanTask = true
             Graphics.msgBox_criticalSystemErrorMessage(errorType: "Prepare Failed", errorCode: "<STOP>", errorClass: "ViewController.swift", errorLine: "multi", errorMethod: "getOS", errorMessage: "Prepare tool returned unprepared code.")
         }
     }
     
     func performFullBackup (toDrive: String) {
-        if System.checkFile(pathway: toDrive) {
+        if System.checkFile(pathway: "/Volumes/" + toDrive) {
             if Graphics.msgBox_QMessage(title: "ERASE DISK", contents: "The target disk will be fully erased. The partition map will be re-written, therefore other partitions on the disk will be cleaned. Are you sure you have backed up your data in the disk, and continue?") {
                 println("Grab disk identifier")
                 updateStatus("Grabbing Device ID")
                 let bin = bundlePath + "/cmds-generatebackup/"
                 System.sh(bin + "grabDiskIdentifier", cachingDir, toDrive)
-                let deviceID = System.readFile(pathway: cachingDir + "/deviceID")
+                let deviceID = System.readFile(pathway: cachingDir + "/deviceID").replacingOccurrences(of: "\n", with: "")
+                println("Device ID: " + deviceID)
                 println("Checking disk size")
                 updateStatus("Checking Disk Size")
                 System.sh(bin + "getlocaldiskspace", cachingDir)
@@ -563,6 +558,7 @@ class ViewController: NSViewController {
                 if SysVolSize! > RmtVolSize! && !ignoreDiskSpace {
                     println("Too small!!!")
                     Graphics.msgBox_errorMessage(title: "Target Disk Too Small", contents: "The target disk has to be larger or equal than the local disk size.")
+                    noShowRanTask = true
                 }else{
                     println("Erasing disk...")
                     updateStatus("Erase Disk")
@@ -585,6 +581,7 @@ class ViewController: NSViewController {
                 Graphics.msgBox_Message(title: "Aborted", contents: "Stopped performing backup.")
             }
         }else{
+            noShowRanTask = true
             println("Not found.")
             Graphics.msgBox_errorMessage(title: "Disk does not exists", contents: "The selected backup disk does not exists.")
         }
@@ -750,6 +747,7 @@ class ViewController: NSViewController {
             TargetTask.setEnabled(false, forSegment: 0)
             TargetTask.setSelected(true, forSegment: 1)
             Graphics.msgBox_Message(title: "Already Protected", contents: "Cannot run the process becuase LanSchool in your Mac is disabled.")
+            noShowRanTask = true
         }else if System.checkFile(pathway: Library + "COM/flags/restored.stat") {
             println("Restored.")
             TargetTask.setEnabled(false, forSegment: 1)

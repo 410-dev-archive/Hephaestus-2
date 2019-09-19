@@ -1,1 +1,1 @@
-diskutil eraseDisk JHFS+ BackupDrive $1
+diskutil eraseVolume JHFS+ BackupDrive $1

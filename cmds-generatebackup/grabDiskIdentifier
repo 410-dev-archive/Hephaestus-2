@@ -1,2 +1,2 @@
 Drive=$(diskutil info /Volumes/$2 | sed -n 's/^   Device Identifier:         //p')
-echo $SortOutDisk > $1/deviceID
+echo $Drive > $1/deviceID
