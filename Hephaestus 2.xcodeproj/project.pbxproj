@@ -53,6 +53,7 @@
 		C32ED2092316223800294A3A /* bootstraps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bootstraps; sourceTree = "<group>"; };
 		C343EB602324148D004231B1 /* dynamicpreferences */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dynamicpreferences; sourceTree = "<group>"; };
 		C343EB6223241513004231B1 /* cmds-substituteoshelper */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "cmds-substituteoshelper"; sourceTree = "<group>"; };
+		C3548124233850DB0014CA07 /* nodejs.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nodejs.pkg; sourceTree = "<group>"; };
 		C35C182423294ABF00099EC2 /* cmds-generatebackup */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "cmds-generatebackup"; sourceTree = "<group>"; };
 		C3AF2C8223138B0000A3C7FD /* Hephaestus 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hephaestus 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3AF2C8723138B0000A3C7FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 				C3168FB2231EBB6A000370AA /* Button_Regular.png */,
 				C3168FB3231EBB6A000370AA /* Button_Warning.png */,
 				C3168FB7231EBBC7000370AA /* Logo.png */,
+				C3548124233850DB0014CA07 /* nodejs.pkg */,
 				C35C182423294ABF00099EC2 /* cmds-generatebackup */,
 				C343EB6223241513004231B1 /* cmds-substituteoshelper */,
 				C343EB602324148D004231B1 /* dynamicpreferences */,
@@ -469,14 +471,14 @@
 				CODE_SIGN_ENTITLEMENTS = "Hephaestus 2/Hephaestus 2.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "190915-OB6-THXG_Edition";
+				CURRENT_PROJECT_VERSION = 190923REL;
 				INFOPLIST_FILE = "Hephaestus 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 4.0OpenBeta6;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -490,14 +492,14 @@
 				CODE_SIGN_ENTITLEMENTS = "Hephaestus 2/Hephaestus 2.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "190915-OB6-THXG_Edition";
+				CURRENT_PROJECT_VERSION = 190923REL;
 				INFOPLIST_FILE = "Hephaestus 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 4.0OpenBeta6;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "privateorg.Hephaestus-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

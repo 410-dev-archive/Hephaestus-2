@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let MaxStep = 19.0
     var currentStep = 0.0
     let MaxStepInString = "19"
-    let version = "4.0 Open Beta 6"
+    let version = "4.0 Public Release"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
@@ -111,10 +111,17 @@ class ViewController: NSViewController {
         SecureTextField.isHidden = true
         VersionString.stringValue = version
         cachingDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "") + "/hephaestustmp"
+        showDisclaimer()
         println("Ready.")
         super.viewDidLoad()
         super.viewWillAppear()
         super.viewDidAppear()
+    }
+    
+    func showDisclaimer() {
+        print("DISCLAIMER===============")
+        print("Please use this tool when you recognized the risk of violating the digital use policies of KIS. If you execute any command from this tool, you are taking your own risk of violation of digital use policies of KIS. I DO NOT have responsibility for any consequence by using this tool, such as lost of data or punishment from school.")
+        print("=========================")
     }
     
     func println(_ msg: String) {
@@ -412,12 +419,78 @@ class ViewController: NSViewController {
                 Graphics.msgBox_errorMessage(title: "Locked", contents: "Firmware is locked with firware password. Remove it first to resume.")
                 noShowRanTask = true
             }
+        }else if ETCCommands.stringValue.elementsEqual("Install GT") {
+            if System.checkFile(pathway: "/usr/local/bin/gt") {
+                Graphics.msgBox_Message(title: "GreenTunnel installed", contents: "GreenTunnel is already installed.")
+                noShowRanTask = true
+            }else{
+                installGrennTunnel()
+            }
+        }else if ETCCommands.stringValue.elementsEqual("Install NodeJS") {
+            if System.checkFile(pathway: "/usr/local/bin/npm") && System.checkFile(pathway: "/usr/local/bin/node") {
+                Graphics.msgBox_Message(title: "NodeJS / NPM installed", contents: "NodeJS or NPM package manager is already installed.")
+                noShowRanTask = true
+            }else{
+                installNodeJS()
+            }
         }else if ETCCommands.stringValue.elementsEqual("NextOptionWillBeHere") {
-            
+            Graphics.msgBox_Message(title: "HC SVNT DRACONES", contents: "What were you expecting...")
+            System.sh("halt")
         }else{
             noShowRanTask = true
             Graphics.msgBox_errorMessage(title: "Error", contents: "No valid option available.")
         }
+    }
+    
+    @discardableResult
+    func installNodeJS() -> Bool{
+        println("Checking NodeJS Package...")
+        updateStatus("Check NodeJS")
+        if System.checkFile(pathway: bundlePath + "/nodejs.pkg"){
+            println("Installing NodeJS 10.16.3 LTS...")
+            updateStatus("Install NodeJS (10.16.3 LTS)")
+            System.sh("installer", "-pkg", bundlePath + "/nodejs.pkg", "-target", "/")
+            ranTasks = ranTasks + "\nInstalled NodeJS"
+            println("Checking installation...")
+            updateStatus("Check")
+            if System.checkFile(pathway: "/usr/local/bin/npm") && System.checkFile(pathway: "/usr/local/bin/node") {
+                println("Done")
+                updateStatus("Done!")
+                return true
+            }else{
+                println("Failed to install NodeJS!")
+                updateStatus("Failed")
+                Outlet_Button.stringValue = "Failed"
+                Graphics.msgBox_errorMessage(title: "Installation Failure", contents: "Failed installing NodeJS.")
+                return false
+            }
+        }else{
+            println("Package not found!")
+            Graphics.msgBox_errorMessage(title: "Package Not Found", contents: "NodeJS pkg is not found in the bundle. Please install NodeJS manually.")
+            return false
+        }
+    }
+    
+    func installGrennTunnel() {
+        if !System.checkFile(pathway: "/usr/local/bin/npm") || !System.checkFile(pathway: "/usr/local/bin/node") {
+            println("NodeJS not found!")
+            if installNodeJS() {
+                Graphics.msgBox_errorMessage(title: "No NodeJS", contents: "installNodeJS() returned exit code 1. Please install nodeJS manually.")
+            }else{
+                npmGT()
+            }
+        }else{
+            npmGT()
+        }
+    }
+    
+    func npmGT(){
+        println("Installing GreenTunnel with NPM")
+        updateStatus("Install GT w/ NPM")
+        System.sh("npm", "i", "-g", "green-tunnel")
+        ranTasks = ranTasks + "\nInstalled GreenTunnel"
+        println("Done!")
+        Graphics.msgBox_Message(title: "Finished installing GT", contents: "Finished installing Green Tunnel to your Mac. Type gt in Terminal, or open ExecGT.command from desktop.")
     }
     
     func getOS(targetVersion: String) -> Bool {
