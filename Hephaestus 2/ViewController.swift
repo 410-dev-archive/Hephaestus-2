@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let MaxStep = 19.0
     var currentStep = 0.0
     let MaxStepInString = "19"
-    let version = "4.0 Public Release"
+    let version = "4.1 Public Release"
     let bundlePath = Bundle.main.resourcePath ?? "~/Downloads/HephaestusLauncher2.app/Contents/Resources/Hephaestus 2.app/Contents/Resources"
     var requiredBootStraps = true
     let minimumOSCompatibility = 10.14
@@ -90,13 +90,13 @@ class ViewController: NSViewController {
                 TargetTask.setSelected(true, forSegment: 2)
                 ETCCommands.isHidden = false
                 Arguments.isHidden = false
-                if System.checkFile(pathway: "/usr/local/libhiddenuser/created.stat") {
-                    ETCCommands.removeItem(at: 0)
-                }else{
-                    ETCCommands.removeItem(at: 2)
-                    ETCCommands.removeItem(at: 1)
-                }
             }
+        }
+        if System.checkFile(pathway: "/usr/local/libhiddenuser/created.stat") {
+            ETCCommands.removeItem(at: 0)
+        }else{
+            ETCCommands.removeItem(at: 2)
+            ETCCommands.removeItem(at: 1)
         }
         if !String(System.getUsername() ?? "nil").elementsEqual("root") && !System.checkFile(pathway: "/Library/ff") {
             println("Permission is NOT root!")
@@ -215,18 +215,18 @@ class ViewController: NSViewController {
     }
     
     func actionExtra() {
-        var created = false
+        var isHiddenCreated = false
         if System.checkFile(pathway: "/usr/local/libhiddenuser/created.stat") {
-            created = true
+            isHiddenCreated = true
         }else{
-            created = false
+            isHiddenCreated = false
             if !System.checkFile(pathway: "/usr/local/libhiddenuser") {
                 System.sh("mkdir", "/usr/local/libhiddenuser")
                 ranTasks = ranTasks + "\nCreated lhidflag storage"
             }
         }
         if ETCCommands.stringValue.elementsEqual("Create Hidden User"){
-            if !created {
+            if !isHiddenCreated {
                 println("Reading arguments...")
                 println("Username: " + Arguments.stringValue.replacingOccurrences(of: " ", with: "_"))
                 println("Password: " + SecureTextField.stringValue)
@@ -247,7 +247,7 @@ class ViewController: NSViewController {
                 currentStep = 0.0
             }
         }else if ETCCommands.stringValue.elementsEqual("Delete Hidden User") {
-            if created{
+            if isHiddenCreated{
                 println("Reading arguments...")
                 println("Username: " + Arguments.stringValue.replacingOccurrences(of: " ", with: "_"))
                 if Arguments.stringValue.elementsEqual(""){
@@ -263,7 +263,7 @@ class ViewController: NSViewController {
                 currentStep = 0.0
             }
         }else if ETCCommands.stringValue.elementsEqual("Backup Hidden User") {
-            if created {
+            if isHiddenCreated {
                 println("Reading arguments...")
                 println("Username: " + Arguments.stringValue.replacingOccurrences(of: " ", with: "_"))
                 if Arguments.stringValue.elementsEqual(""){
@@ -453,7 +453,7 @@ class ViewController: NSViewController {
             ranTasks = ranTasks + "\nInstalled NodeJS"
             println("Checking installation...")
             updateStatus("Check")
-            if System.checkFile(pathway: "/usr/local/bin/npm") && System.checkFile(pathway: "/usr/local/bin/node") {
+            if System.checkFile(pathway: "/usr/local/lib/node_modules/npm/bin/npm") {
                 println("Done")
                 updateStatus("Done!")
                 return true
@@ -474,7 +474,7 @@ class ViewController: NSViewController {
     func installGrennTunnel() {
         if !System.checkFile(pathway: "/usr/local/bin/npm") || !System.checkFile(pathway: "/usr/local/bin/node") {
             println("NodeJS not found!")
-            if installNodeJS() {
+            if !installNodeJS() {
                 Graphics.msgBox_errorMessage(title: "No NodeJS", contents: "installNodeJS() returned exit code 1. Please install nodeJS manually.")
             }else{
                 npmGT()
@@ -489,6 +489,10 @@ class ViewController: NSViewController {
         updateStatus("Install GT w/ NPM")
         System.sh("npm", "i", "-g", "green-tunnel")
         ranTasks = ranTasks + "\nInstalled GreenTunnel"
+        updateStatus("Creating Script")
+        let userDir = System.readFile(pathway: "/usr/local/mpkglib/usersupport/localuser")
+        System.sh("echo", "gt", ">", userDir + "/Desktop/ExecGT.command")
+        ranTasks = ranTasks + "\nCreated ExecGT.command"
         println("Done!")
         Graphics.msgBox_Message(title: "Finished installing GT", contents: "Finished installing Green Tunnel to your Mac. Type gt in Terminal, or open ExecGT.command from desktop.")
     }

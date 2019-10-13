@@ -193,6 +193,8 @@
                                         <string>Fix broken application</string>
                                         <string>Full Clone (Backup)</string>
                                         <string>Enable O-ROM Boot</string>
+                                        <string>Install GT</string>
+                                        <string>Install NodeJS</string>
                                     </objectValues>
                                 </comboBoxCell>
                                 <connections>
